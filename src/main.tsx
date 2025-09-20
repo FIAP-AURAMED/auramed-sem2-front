@@ -1,14 +1,15 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import "./index.css";
 
-import Home from './assets/routes/Home'
-import Sobre from './assets/routes/Sobre'
-import CentralAjuda from './assets/routes/CentralAjuda'
-import Tutorial from './assets/routes/Tutorial'
-import Simulador from './assets/routes/Simulador'
-import ComoFunciona from './assets/routes/ComoFunciona'
-import LoginProfissional from './assets/routes/LoginProfissional'
-import NotFound from './assets/routes/NotFound'
+import Home from './routes/Home'
+import Sobre from './routes/Sobre'
+import CentralAjuda from './routes/CentralAjuda'
+import Tutorial from './routes/Tutorial'
+import Simulador from './routes/Simulador'
+import ComoFunciona from './routes/ComoFunciona'
+import LoginProfissional from './routes/LoginProfissional'
+import NotFound from './routes/NotFound'
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import App from './App'
