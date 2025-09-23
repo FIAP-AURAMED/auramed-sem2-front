@@ -39,8 +39,6 @@ export default function ComoFunciona() {
             <section className="my-12 mx-4 flex flex-col items-center justify-center gap-8 text-center">
                 <h1 className="text-4xl md:text-5xl font-bold text-tx-primary ">Como Funciona a Solução Auramed</h1>
                 <p className="text-xl text-tx-secondary max-w-3xl mx-auto">Entenda como nossa plataforma ajuda pacientes e profissionais de saúde a terem sucesso em teleconsultas.</p>
-
-                {/* <h3 className="text-3xl font-bold text-tx-primary">O Processo em 3 Passos Simples</h3> */}
             </section>
 
             <section>
