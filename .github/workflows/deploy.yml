@@ -1,0 +1,39 @@
+name: Deploy no GitHub Pages
+
+on:
+  push:
+    branches:
+      - main # Dispara a automação quando houver push na branch 'main'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Use a mesma versão Node.js do seu projeto
+
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Build do projeto
+        run: npm run build
+
+      - name: Upload do artefato
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # ATENÇÃO: Se seu projeto usa Vite, a pasta é 'dist'.
+          # Se usa Create React App, a pasta é 'build'.
+          path: './build'
+
+      - name: Deploy no GitHub Pages
+        uses: actions/deploy-pages@v4
