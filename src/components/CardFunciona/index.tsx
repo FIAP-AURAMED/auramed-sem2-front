@@ -6,8 +6,8 @@ interface CardFuncionaProps {
     icon: React.ElementType;
     title: string;
     description: string;
-    buttonText: string;
-    buttonLink: string;
+    buttonText?: string;
+    buttonLink?: string;
     colorTheme?: 'pink' | 'yellow'; // Adicionamos temas de cores
     className?: string;
 }
