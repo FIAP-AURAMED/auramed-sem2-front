@@ -33,7 +33,7 @@ jobs:
         with:
           # ATENÇÃO: Se seu projeto usa Vite, a pasta é 'dist'.
           # Se usa Create React App, a pasta é 'build'.
-          path: './build'
+          path: './dist'
 
       - name: Deploy no GitHub Pages
         uses: actions/deploy-pages@v4
