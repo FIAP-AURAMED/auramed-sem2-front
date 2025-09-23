@@ -20,22 +20,22 @@ export default function Home() {
 
     return (
         <div>
-            <section className="my-8 mx-4 flex flex-col items-center justify-center gap-8 text-center">
+            <section className="my-12 mx-4 flex flex-col items-center justify-center gap-8 text-center">
                 <h1 className="text-4xl font-bold text-tx-primary ">Sua teleconsulta, mais fácil e sem faltas.</h1>
                 <p className="text-xl text-tx-secondary max-w-3xl mx-auto">Preparamos você para sua consulta online de forma simples. Garanta que tudo funcione bem e não perca seu atendimento.</p>
                 <Link to="/simulador" className="bg-primary-600 border-none hover:bg-primary-700 text-white text-lg p-6 h-auto rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ">Quero testar minha consulta agora</Link>
             </section>
 
-            <section className="bg-gradient-to-r from-primary-300/10 to-secondary-300/10 p-8 rounded-xl w-[80%] m-10 border-primary-600/10 border-2">
+            <section className="bg-gradient-to-r from-primary-300/10 to-secondary-300/10 p-8 rounded-xl w-[80%] md:w-[40%] m-auto border-primary-600/10 border-2">
                 <div className="flex flex-col justify-center items-center gap-4 bg-gradient-to-r from-primary-600/20 to-secondary-600/20 p-8 rounded-xl i">
                 <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto bg-green-600">
                     <CheckCircle className="w-8 h-8 text-white" />
                 </div>
-                    <p>Teleconsulta funcionando perfeitamente</p>
+                    <p className="text-center text-tx-primary">Teleconsulta funcionando perfeitamente</p>
                 </div>
             </section>
 
-            <section className="flex flex-col items-center justify-center bg-gray-400/10 pb-10">
+            <section className="flex flex-col items-center justify-center bg-gray-400/10 pb-10 my-12">
                 <div className="my-12 mx-4 flex flex-col items-center justify-center gap-8 text-center">
                     <h2 className="text-3xl md:text-4xl font-bold text-tx-primary ">Como Funciona: Um passo de cada vez</h2>
                     <p className="text-lg text-tx-secondary max-w-3xl mx-auto">Nossa solução ajuda você a se preparar completamente para sua teleconsulta</p>
