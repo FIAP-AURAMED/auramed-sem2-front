@@ -43,7 +43,9 @@ const router =createBrowserRouter([
   }
     ]
   }
-]);
+], {
+  basename: "/auramed-sem2-front" // <-- ADICIONE ESTE OBJETO
+});
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
