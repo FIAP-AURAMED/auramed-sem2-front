@@ -2,15 +2,12 @@
   "name": "auramed",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://fiap-auramed.github.io/auramed-sem2-front",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.13",
