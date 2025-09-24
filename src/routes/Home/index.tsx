@@ -56,7 +56,7 @@ export default function Home() {
                         title="Aprenda a Usar"
                         description="Temos um guia completo em texto e áudio para você seguir, sem complicações."
                         buttonText="Ver o passo a passo"
-                        buttonLink="/simulador"
+                        buttonLink="/tutorial"
                         colorTheme="yellow"
                     />
 
@@ -65,7 +65,7 @@ export default function Home() {
                         title="Tire suas Dúvidas"
                         description="Nosso assistente virtual responde suas perguntas a qualquer hora do dia."
                         buttonText="Conversar agora..."
-                        buttonLink="/simulador"
+                        buttonLink="/central-ajuda"
                         colorTheme="pink"
                     />
                 </div>
