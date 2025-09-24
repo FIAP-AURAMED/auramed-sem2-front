@@ -19,7 +19,7 @@ export default function Sobre() {
                     <div className="w-16 h-16 rounded-full flex items-center justify-center bg-primary-600/10">
                         <Target className="w-8 h-8 text-primary-600" />
                     </div>
-                    <h3 className="text-2xl font-bold text-tx-primary">Nossa Missão</h3>
+                    <h2 className="text-2xl font-bold text-tx-primary">Nossa Missão</h2>
                     <p className="text-lg text-tx-secondary max-w-[100%] md:max-w-lg mx-auto">Reduzir significativamente o absenteísmo em teleconsultas através de uma plataforma acessível que prepara e capacita pacientes para o atendimento digital, garantindo que todos tenham acesso igualitário aos cuidados de saúde.</p>
                 </div>
 
@@ -27,7 +27,7 @@ export default function Sobre() {
                     <div className="w-16 h-16 rounded-full flex items-center justify-center bg-secondary-600/10">
                         <Heart className="w-8 h-8 text-secondary-600" />
                     </div>
-                    <h3 className="text-2xl font-bold text-tx-primary">Nossa Visão</h3>
+                    <h2 className="text-2xl font-bold text-tx-primary">Nossa Visão</h2>
                     <p className="text-lg text-tx-secondary max-w-[100%] md:max-w-lg mx-auto">Ser referência em soluções de acessibilidade para telemedicina, criando um futuro onde a tecnologia em saúde seja verdadeiramente inclusiva e onde nenhum paciente seja deixado para trás na transformação digital da medicina..</p>
                 </div>
             </section>
