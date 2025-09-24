@@ -1,78 +1,87 @@
 // src/components/TutorialPassos.tsx
 
 import React, { useState } from 'react';
+import passo1 from '../../assets/passo1.png';
+import passo2 from '../../assets/passo2.png';
+import passo3 from '../../assets/passo3.png';
+import passo4 from '../../assets/passo4.png';
+import passo5 from '../../assets/passo5.png';
+import passo6 from '../../assets/passo6.png';
+import passo7 from '../../assets/passo7.png';
+import passo8 from '../../assets/passo8.png';
+import passo9 from '../../assets/passo9.png';
+import passo10 from '../../assets/passo10.png';
 
-// 1. DADOS DOS PASSOS: Centralizados em um array para fácil manutenção.
-// Basta adicionar, remover ou editar objetos aqui para mudar o tutorial.
+
 const passosData = [
     {
         id: 1,
         title: 'Passo 1: Baixe o aplicativo',
         description: 'Vá até a loja do seu celular (Play Store ou App Store) e procure por "Portal do Paciente HC".',
-        imageSrc: '../../public/img/passo1.png', // <-- Lembre-se de colocar as imagens na pasta `public/img`
+        imageSrc: passo1,
         imageAlt: 'Loja de aplicativos mostrando o app Portal do Paciente HC',
     },
     {
         id: 2,
         title: 'Passo 2: Tela inicial',
         description: 'Após abrir a tela do aplicativo, clique em “Acessar Portal” para fazer o Cadastro.',
-        imageSrc: '../../public/img/passo2.png',
+        imageSrc: passo2,
         imageAlt: 'Tela inicial do aplicativo do HC, com seta para clicar em Acessar Portal',
     },
     {
         id: 3,
         title: 'Passo 3: Cadastre-se',
         description: 'Se for sua primeira vez acessando o aplicativo, clique em “Cadastrar Senha”.',
-        imageSrc: '../../public/img/passo3.png',
+        imageSrc: passo3,
         imageAlt: 'Tela do aplicativo mostrando a opção de cadastrar senha',
     },
     {
         id: 4,
         title: 'Passo 4: Cadastro inicial',
         description: 'Na tela de cadastro, digite seu CPF (somente números) no campo indicado e toque em “Localizar Paciente”.',
-        imageSrc: '../../public/img/passo4.png',
+        imageSrc: passo4,
         imageAlt: 'Tela de cadastro de senha no app do HC.',
     },
     {
         id: 5,
         title: 'Passo 5: Preencha seus dados',
         description: 'Seu nome e CPF aparecerão automaticamente. Preencha os demais campos e responda as perguntas. Depois, toque em “Salvar”.',
-        imageSrc: '../../public/img/passo5.png',
+        imageSrc: passo5,
         imageAlt: 'Tela com campos de cadastro no app do HC.',
     },
     {
         id: 6,
         title: 'Passo 6: Login',
         description: 'Você voltará para a tela de início. Digite o CPF e a senha que acabou de cadastrar. Depois, toque em “Acessar”.',
-        imageSrc: '../../public/img/passo6.png',
+        imageSrc: passo6,
         imageAlt: 'Tela de login no app do HC.',
     },
     {
         id: 7,
         title: 'Passo 7: Menu principal',
         description: 'Caso sua consulta não apareça de imediato, toque no botão “Menu” na parte inferior da tela.',
-        imageSrc: '../../public/img/passo7.png',
+        imageSrc: passo7,
         imageAlt: 'Tela inicial do app do HC com a opção Menu destacada.',
     },
     {
         id: 8,
         title: 'Passo 8: Acesse a teleconsulta',
         description: 'Dentro do menu, toque na opção “Teleconsulta”. Ali você verá sua consulta marcada.',
-        imageSrc: '../../public/img/passo8.png',
+        imageSrc: passo8,
         imageAlt: 'Tela do menu do aplicativo com a opção Teleconsulta destacada.',
     },
     {
         id: 9,
         title: 'Passo 9: Entrar na teleconsulta',
         description: 'Toque duas vezes na opção “Teleconsulta”. Depois, toque em “Entrar na Teleconsulta” para acessar a sala virtual.',
-        imageSrc: '../../public/img/passo9.png',
+        imageSrc: passo9,
         imageAlt: 'Tela de detalhes da teleconsulta com botão Entrar destacado.',
     },
     {
         id: 10,
         title: 'Passo 10: Aguardar o profissional',
         description: 'Agora é só aguardar o profissional de saúde entrar na sala. Você será atendido em breve, fique tranquilo.',
-        imageSrc: '../../public/img/passo10.png',
+        imageSrc: passo10,
         imageAlt: 'Tela de sala de espera da teleconsulta.',
     },
 ];
