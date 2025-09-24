@@ -6,7 +6,7 @@ export default function LoginProfissional() {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    navigate("/profissional/dashboard");
+    navigate("/profissional");
   };
 
   return (

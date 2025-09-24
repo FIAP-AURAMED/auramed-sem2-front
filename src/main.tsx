@@ -13,8 +13,6 @@ import ComoFunciona from "./routes/ComoFunciona";
 import LoginProfissional from "./routes/LoginProfissional";
 import NotFound from "./routes/NotFound";
 import ProfissionalLayout from "./routes/ProfissionalLayout";
-import DashboardProfissional from "./routes/DashboardProfissional";
-import QuestionarioProfissional from "./routes/QuestionarioProfissional";
 
 const router = createBrowserRouter(
   [
@@ -30,14 +28,7 @@ const router = createBrowserRouter(
         { path: "/simulador", element: <Simulador /> },
         { path: "/como-funciona", element: <ComoFunciona /> },
         { path: "/login-profissional", element: <LoginProfissional /> },
-      ],
-    },
-    {
-      path: "/profissional",
-      element: <ProfissionalLayout />,
-      children: [
-        { path: "dashboard", element: <DashboardProfissional /> },
-        { path: "questionario", element: <QuestionarioProfissional /> },
+        { path: "/profissional", element: <ProfissionalLayout /> },
       ],
     },
   ],
