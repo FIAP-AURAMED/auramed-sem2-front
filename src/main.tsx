@@ -15,40 +15,48 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import App from './App'
 
 
-const router =createBrowserRouter([
-  {path: "/",
-    element: <App/>,
-    errorElement:<NotFound/>,
-    children:[
-      {path: "/",
-      element: <Home/>
-  },
-  {path: "/sobre",
-    element: <Sobre/>
-  },
-  {path: "/central-ajuda",
-    element: <CentralAjuda/>
-  },
-  {path: "/tutorial",
-    element: <Tutorial/>
-  },
-  {path: "/simulador",
-    element: <Simulador/>
-  },
-  {path: "/como-funciona",
-    element: <ComoFunciona/>
-  },
-  {path: "/login-profissional",
-    element: <LoginProfissional/>
-  }
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    errorElement: <NotFound />,
+    children: [
+      {
+        path: "/",
+        element: <Home />
+      },
+      {
+        path: "/sobre",
+        element: <Sobre />
+      },
+      {
+        path: "/central-ajuda",
+        element: <CentralAjuda />
+      },
+      {
+        path: "/tutorial",
+        element: <Tutorial />
+      },
+      {
+        path: "/simulador",
+        element: <Simulador />
+      },
+      {
+        path: "/como-funciona",
+        element: <ComoFunciona />
+      },
+      {
+        path: "/login-profissional",
+        element: <LoginProfissional />
+      }
     ]
   }
 ], {
-  basename: "/auramed-sem2-front" // <-- ADICIONE ESTE OBJETO
+  basename: import.meta.env.BASE_URL
 });
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={router}/>
+    <RouterProvider router={router} />
   </StrictMode>,
 )
