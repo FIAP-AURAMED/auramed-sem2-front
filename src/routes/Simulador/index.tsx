@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import * as faceapi from '@vladmandic/face-api';
+import { Camera, CameraOff, Lightbulb, Monitor, Wifi } from 'lucide-react';
 
 type Status = 'success' | 'error' | 'warning' | 'info';
 type FeedbackMessage = {
@@ -138,47 +139,83 @@ const FaceApiSimulator: React.FC = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center font-sans bg-slate-100 p-5 rounded-lg shadow-xl">
-            <h2 className="text-2xl font-bold mb-5 text-slate-800">
+        <div className="flex flex-col items-center justify-center font-sans p-5 rounded-lg shadow-xl">
+            <h1 className="text-4xl font-bold mb-5 text-tx-primary text-center">
                 Simulador de Posicionamento
-            </h2>
+            </h1>
+            <p className="text-lg text-tx-secondary text-center max-w-150 mb-10">Teste sua câmera antes da consulta real. Receba feedback em tempo real para garantir a melhor experiência.</p>
 
-            <div className="relative w-full max-w-2xl aspect-[4/3] rounded-md overflow-hidden shadow-md bg-gray-900 flex items-center justify-center">
-                <video
-                    ref={videoRef}
-                    autoPlay
-                    playsInline
-                    muted
-                    onPlay={handleVideoPlay}
-                    className={`w-full h-full object-cover -scale-x-100 ${!isCameraOn && 'hidden'}`}
-                />
-                {!isCameraOn && (
-                    <div className="text-white text-center p-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="mx-auto h-12 w-12 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path><circle cx="12" cy="13" r="3"></circle></svg>
-                        <p className="mt-2 text-lg">A câmera está desligada.</p>
+            <div className='flex flex-col md:flex-row gap-4 '>
+                <div className='border-2 border-gray-300 p-5 rounded-lg'>
+                    <div className='flex items-center gap-3 mb-4'>
+                        <Camera className='h-8 w-8 text-primary-600' />
+                        <h2 className='text-xl font-semibold text-tx-primary'>Teste de Câmera</h2>
                     </div>
-                )}
-            </div>
+                    <div className="relative w-full max-w-2xl aspect-[4/3] rounded-md overflow-hidden shadow-md bg-gray-700 flex items-center justify-center">
+                        <video
+                            ref={videoRef}
+                            autoPlay
+                            playsInline
+                            muted
+                            onPlay={handleVideoPlay}
+                            className={`w-full h-full object-cover -scale-x-100 ${!isCameraOn && 'hidden'}`}
+                        />
+                        {!isCameraOn && (
+                            <div className="text-white text-center p-4">
+                                <CameraOff className='h-12 w-12 text-gray-200 mx-auto' />
+                                <p className="mt-2 text-lg">Clique em "Ligar Câmera" para começar</p>
+                            </div>
+                        )}
+                    </div>
 
-            <div className="w-full max-w-2xl mt-4">
-                <button
-                    onClick={isCameraOn ? stopCamera : startCamera}
-                    disabled={isLoadingModels}
-                    className="w-full px-4 py-3 text-lg font-bold text-white rounded-md transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                    style={{ backgroundColor: isCameraOn ? '#d9534f' : '#5cb85c' }}
-                >
-                    {isLoadingModels ? 'Carregando...' : (isCameraOn ? 'Desligar Câmera' : 'Ligar Câmera')}
-                </button>
-            </div>
+                    <div className="w-full max-w-2xl mt-4">
+                        <button
+                            onClick={isCameraOn ? stopCamera : startCamera}
+                            disabled={isLoadingModels}
+                            className="w-full px-4 py-3 text-lg font-bold text-white rounded-md transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                            style={{ backgroundColor: isCameraOn ? '#B71D19' : '#177E17' }}
+                        >
+                            {isLoadingModels ? 'Carregando...' : (isCameraOn ? 'Desligar Câmera' : 'Ligar Câmera')}
+                        </button>
+                    </div>
+                </div>
 
-            <div
-                className={`mt-5 w-full max-w-2xl text-center bg-white p-3 rounded-md border-2 transition-colors duration-300 ${statusClasses[feedback.status].border}`}
-            >
-                <p className={`text-lg font-bold transition-colors duration-300 ${statusClasses[feedback.status].text}`}>
-                    {feedback.message}
-                </p>
+                <div>
+                    <div
+                        className={`flex flex-col items-center justify-center w-full md:h-20 max-w-2xl text-center bg-white p-3 rounded-md border-2 transition-colors duration-300 ${statusClasses[feedback.status].border}`}
+                    >
+                        <h2 className={`text-lg md:text-xl font-bold transition-colors duration-300 ${statusClasses[feedback.status].text}`}>
+                            {feedback.message}
+                        </h2>
+                    </div>
+
+                    <div className='border-2 border-gray-300 p-8 rounded-lg mt-4'>
+                        <h2 className='text-xl font-semibold text-tx-primary mb-6'>Lista de Verificação</h2>
+                        <div className='flex items-start gap-4 mb-4'>
+                            <Monitor className='h-6 w-6 text-primary-600' />
+                            <div>
+                                <h3 className='text-lg text-tx-primary font-medium'>Posição da tela</h3>
+                                <p className='text-md text-tx-secondary'>A câmera deve estar na altura dos seus olhos</p>
+                            </div>
+                        </div>
+                        <div className='flex items-start gap-4 mb-4'>
+                            <Lightbulb className='h-6 w-6 text-primary-600' />
+                            <div>
+                                <h3 className='text-lg text-tx-primary font-medium'>Iluminação</h3>
+                                <p className='text-md text-tx-secondary'>Certifique-se de ter luz suficiente no rosto</p>
+                            </div>
+                        </div>
+                        <div className='flex items-start gap-4 mb-4'>
+                            <Wifi className='h-6 w-6 text-primary-600' />
+                            <div>
+                                <h3 className='text-lg text-tx-primary font-medium'>Conexão</h3>
+                                <p className='text-md text-tx-secondary'>Use Wi-Fi sempre que possível</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </div >
     );
 };
 
