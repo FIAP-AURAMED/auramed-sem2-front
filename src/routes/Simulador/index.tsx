@@ -32,7 +32,7 @@ const FaceApiSimulator: React.FC = () => {
 
     useEffect(() => {
         const loadModels = async () => {
-            const MODEL_URL = '/models';
+            const MODEL_URL = `${import.meta.env.BASE_URL}models`;
             setFeedback({ message: 'Carregando modelos de IA...', status: 'info' });
             try {
                 await Promise.all([
