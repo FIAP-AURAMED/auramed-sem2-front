@@ -87,3 +87,21 @@ const startCamera = async () => {
     setIsCameraOn(false);
     setFeedback({ message: 'Câmera desligada.', status: 'info' });
   };
+
+  const handleVideoPlay = () => {
+    console.log('[DEBUG] Vídeo iniciado. Começando detecção em loop.');
+    intervalRef.current = setInterval(async () => {
+      const video = videoRef.current;
+      if (video && !video.paused && !video.ended) {
+        const detection = await faceapi
+          .detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
+          .withFaceLandmarks();
+
+        if (detection) {
+          analyzePosition(detection);
+        } else {
+          setFeedback({ message: 'Nenhum rosto detectado...', status: 'error' });
+        }
+      }
+    }, 200);
+  };
