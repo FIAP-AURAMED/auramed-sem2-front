@@ -73,3 +73,17 @@ const startCamera = async () => {
       setFeedback({ message: 'Não foi possível acessar a câmera.', status: 'error' });
     }
   };
+
+  const stopCamera = () => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    intervalRef.current = null;
+    
+    if (videoRef.current && videoRef.current.srcObject) {
+      const stream = videoRef.current.srcObject as MediaStream;
+      stream.getTracks().forEach(track => track.stop());
+      videoRef.current.srcObject = null;
+    }
+    
+    setIsCameraOn(false);
+    setFeedback({ message: 'Câmera desligada.', status: 'info' });
+  };
