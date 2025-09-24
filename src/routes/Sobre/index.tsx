@@ -1,8 +1,8 @@
 import { Heart, Target } from "lucide-react";
 import CardParticipante from "../../components/CardParticipantes";
 import imgDiego from "../../assets/image-diego.png";
-import linkedin from "../../assets/linkedin.svg";
-import github from "../../assets/github.svg"
+import imgGrazi from "../../assets/image-grazi.png";
+import imgIsa from "../../assets/img-isa.png";
 
 
 export default function Sobre() {
@@ -32,20 +32,33 @@ export default function Sobre() {
                 </div>
             </section>
 
-            <section>
+            <section className="my-20">
                 <h3 className="text-2xl font-bold text-tx-primary text-center">Nossa Equipe</h3>
-                <p className="text-lg text-tx-secondary max-w-[80%] md:max-w-lg mx-auto">Profissionais dedicados à inovação em saúde digital e acessibilidade</p>
+                <p className="text-lg text-tx-secondary max-w-[80%] md:max-w-lg mx-auto text-center">Profissionais dedicados à inovação em saúde digital e acessibilidade</p>
 
-                <div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 m-5 md:mx-30 mt-8">
                     <CardParticipante 
                         img={imgDiego}
-                        title="Diego Andrade"
-                        description="1TDSPO - RM566385"
-                        linkUrl="https://www.linkedin.com/in/andradedossantosdiego/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
-                        icon={linkedin}
-                        linkUrl="https://github.com/diandrade"
-                        icon={github}
-    
+                        name="Diego Andrade"
+                        role="1TDSPO - RM566385"
+                        githubUrl="https://github.com/diandrade"
+                        linkedinUrl="https://www.linkedin.com/in/andradedossantosdiego/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                    />
+
+                    <CardParticipante
+                        img={imgGrazi}
+                        name="Grazielle Alencar"
+                        role="1TDSPO - RM561529"
+                        githubUrl="https://github.com/grazialencar"
+                        linkedinUrl="https://www.linkedin.com/in/grazielle-alencar/"
+                    />
+
+                    <CardParticipante
+                        img={imgIsa}
+                        name="Isabela Yamauchi"
+                        role="1TDSPO - RM560310 "
+                        githubUrl="https://github.com/IsabelaYamauchi"
+                        linkedinUrl="hhttps://www.linkedin.com/in/isabelayamauchi/"
                     />
                 </div>
             </section>

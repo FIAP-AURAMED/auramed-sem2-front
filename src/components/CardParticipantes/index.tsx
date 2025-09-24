@@ -1,44 +1,77 @@
-// src/components/ActionCard.tsx
-import { Link } from 'react-router-dom'; // Importe o Link do seu roteador
+import github from "../../assets/github.svg" 
+import linkedin from "../../assets/linkedin.svg"
 
-// 1. Definimos as props para este card específico
+// 2. Props atualizadas para serem mais específicas
 interface CardParticipanteProps {
     img: string;
-    title: string;
-    description: string;
-    icon: string;
-    linkUrl: string;
+    name: string; // 'title' renomeado para 'name' para mais clareza
+    role: string; // 'description' renomeado para 'role'
+    githubUrl?: string; // URL específica e opcional para o GitHub
+    linkedinUrl?: string; // URL específica e opcional para o LinkedIn
     className?: string;
 }
 
-export default function CardParticipante({ img, title, description, linkUrl, icon, className, }: CardParticipanteProps) {
+export default function CardParticipante({
+    img,
+    name,
+    role,
+    githubUrl,
+    linkedinUrl,
+    className,
+}: CardParticipanteProps) {
     return (
         <div
             className={`
-        bg-primary-600/20 rounded-lg text-center hover:shadow-lg p-6 flex flex-col items-center justify-center space-y-4
-        ${className}`}
+                bg-white border-2 border-transparent rounded-lg text-center shadow-md
+                hover:shadow-xl hover:border-primary-500 transition-all duration-300
+                p-6 flex flex-col items-center space-y-2
+                ${className}
+            `}
         >
+            {/* 3. Imagem do participante com estilos corrigidos */}
+            <img
+                src={img}
+                alt={`Foto de ${name}`}
+                className='w-32 h-32 rounded-full object-cover mb-2' // Corrigido 'redoude-' e ajustado tamanho
+            />
 
-            <img src={img} alt={title} className='w-50 h-50 redoude-' />
-
-            {/* Título */}
-            <h3 className="text-xl font-semibold text-tx-primary">
-                {title}
+            {/* Nome do Participante */}
+            <h3 className="text-lg font-semibold text-gray-800">
+                {name}
             </h3>
 
-            {/* Descrição */}
-            <p className="text-tx-secondary flex-grow">
-                {description}
+            {/* Descrição/Cargo */}
+            <p className="text-gray-600 flex-grow min-h-[40px] text-sm">
+                {role}
             </p>
 
-            <div className='flex items-center just gap-2'>
-                <Link to={linkUrl}>
-                    <img src={icon} title={icon} className={`h-8 w-8 text-primary-600`} aria-hidden="true" />
-                </Link>
+            {/* 4. Ícones e Links Condicionais */}
+            <div className='flex items-center justify-center gap-4 mt-2'>
+                {/* Renderiza o ícone do GitHub APENAS se githubUrl for fornecido */}
+                {githubUrl && (
+                    <a
+                        href={githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Perfil de ${name} no GitHub`}
+                        className="text-gray-500 hover:text-gray-900 transition-colors"
+                    >
+                        <img src={github} alt={`Ícone do GitHub de ${name}`} className="w-8 h-8"/>
+                    </a>
+                )}
 
-                <Link to={linkUrl}>
-                    <img src={icon} title={icon} className={`h-8 w-8 text-primary-600`} aria-hidden="true" />
-                </Link>
+                {/* Renderiza o ícone do LinkedIn APENAS se linkedinUrl for fornecido */}
+                {linkedinUrl && (
+                    <a
+                        href={linkedinUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Perfil de ${name} no LinkedIn`}
+                        className="text-gray-500 hover:text-blue-600 transition-colors"
+                    >
+                        <img src={linkedin} alt={`Ícone do LinkedIn de ${name}`} className="w-8 h-8"/>
+                    </a>
+                )}
             </div>
         </div>
     );

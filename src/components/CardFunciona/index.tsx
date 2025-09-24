@@ -12,7 +12,7 @@ interface CardFuncionaProps {
     className?: string;
 }
 
-export default function CardFunciona({icon: Icon, title, description, buttonText, buttonLink, colorTheme = 'pink', className,}: CardFuncionaProps) {
+export default function CardFunciona({ icon: Icon, title, description, buttonText, buttonLink, colorTheme = 'pink', className, }: CardFuncionaProps) {
 
     // 2. Mapa de estilos para as cores do ícone
     const colorStyles = {
@@ -52,14 +52,15 @@ export default function CardFunciona({icon: Icon, title, description, buttonText
                 {description}
             </p>
 
-            {/* Botão/Link de Ação */}
-            <Link
-                to={buttonLink}
-                className=" border-1 border-solid border-gray-300 px-4 py-2 rounded-lg hover:bg-primary-600 hover:text-white transition-colors mt-4"
-                aria-label={title} // Boa prática de acessibilidade
-            >
-                {buttonText}
-            </Link>
+            {buttonLink && (
+                <Link
+                    to={buttonLink}
+                    className=" border-1 border-solid border-gray-300 px-4 py-2 rounded-lg hover:bg-primary-600 hover:text-white transition-colors mt-4"
+                    aria-label={title} // Boa prática de acessibilidade
+                >
+                    {buttonText}
+                </Link>
+            )}
         </div>
     );
 }

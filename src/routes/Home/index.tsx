@@ -88,7 +88,7 @@ export default function Home() {
                 </div>
             </section>
 
-            <section className="bg-gradient-to-r from-primary-300/10 to-secondary-300/10 py-8">
+            <section className="bg-gradient-to-r from-primary-300/10 to-secondary-300/10 py-8 mb-20">
                 <div className="mt-12 mx-4 flex flex-col items-center justify-center gap-8 text-center">
                     <h2 className="text-3xl md:text-4xl font-bold text-tx-primary ">Um site feito para ser usado por todos</h2>
                     <p className="text-lg text-tx-secondary max-w-3xl mx-auto">Acreditamos que a tecnologia deve ser fácil para todos. Por isso, nosso site conta com recursos especiais:</p>
