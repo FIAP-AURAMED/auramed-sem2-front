@@ -50,7 +50,8 @@ export default function LoginProfissional() {
 
             </section>
 
-            <section className="w-[80%] max-w-100 m-auto border-gray-300 border-2 bg-primary-400/10 p-4 rounded-lg">
+            {/* A classe "mb-12" foi adicionada aqui para criar espaço antes do footer */}
+            <section className="w-[80%] max-w-100 m-auto border-gray-300 border-2 bg-primary-400/10 p-4 rounded-lg mb-12">
                 <h3 className="font-semibold text-tx-primary text-center mb-4">
                     Funcionalidades da Área do Profissional
                 </h3>
