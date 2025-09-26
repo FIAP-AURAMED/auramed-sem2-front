@@ -1,26 +1,17 @@
 import { MenuIcon, User, X } from 'lucide-react';
 import { useState } from 'react';
-// Importa o Link, useLocation e BrowserRouter para navegação e verificação de rota
 import { Link, useLocation } from 'react-router-dom';
 
 
-// --- Componente de Conteúdo do Header ---
-// A lógica principal do header está aqui para que possa usar o hook useLocation.
 export default function Menu() {
-    // Hook para obter a localização atual e saber qual link está ativo
     const location = useLocation();
-    // Estado para controlar a visibilidade do menu mobile
     const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
-
-    // Função para verificar se um caminho (path) é o da página atual
     const isActive = (path: string): boolean => location.pathname === path;
 
-    // Função para fechar o menu mobile, útil para os links
     const closeMobileMenu = () => {
         setMobileMenuOpen(false);
     };
 
-    // Estilos base para os links de navegação, para não repetir código
     const navLinkBaseStyle: string = "px-4 py-2 rounded-md text-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500";
     const navLinkDesktopIdleStyle: string = "text-gray-700 hover:bg-gray-100 hover:text-gray-900";
     const navLinkActiveStyle: string = "bg-primary-600 text-white";
@@ -32,14 +23,13 @@ export default function Menu() {
             <div className="container mx-auto px-4 py-4">
                 <div className="flex items-center justify-between gap-4">
                     {/* Navegação Principal (Desktop) */}
-                    <nav className="hidden md:flex items-center gap-1" role="navigation" aria-label="Navegação principal">
+                    <nav className="hidden md:flex items-center gap-4" role="navigation" aria-label="Navegação principal">
                         <Link to="/" className={`${navLinkBaseStyle} ${isActive('/') ? navLinkActiveStyle : navLinkDesktopIdleStyle}`} aria-current={isActive('/') ? 'page' : undefined}>Início</Link>
                         <Link to="/como-funciona" className={`${navLinkBaseStyle} ${isActive('/como-funciona') ? navLinkActiveStyle : navLinkDesktopIdleStyle}`} aria-current={isActive('/como-funciona') ? 'page' : undefined}>Como Funciona</Link>
                         <Link to="/sobre" className={`${navLinkBaseStyle} ${isActive('/sobre') ? navLinkActiveStyle : navLinkDesktopIdleStyle}`} aria-current={isActive('/sobre') ? 'page' : undefined}>Sobre o Projeto</Link>
                         <Link to="/central-ajuda" className={`${navLinkBaseStyle} ${isActive('/central-ajuda') ? navLinkActiveStyle : navLinkDesktopIdleStyle}`} aria-current={isActive('/central-ajuda') ? 'page' : undefined}>Central de Ajuda</Link>
                     </nav>
 
-                    {/* Acesso Profissional (Desktop) e Gatilho do Menu (Mobile) */}
                     <div className="flex items-center gap-3">
                         {/* Botão de Acesso do Profissional (Desktop) */}
                         <Link to="/login-profissional" className="hidden md:block">
@@ -61,9 +51,9 @@ export default function Menu() {
                 </div>
             </div>
 
-            {/* Fundo escuro (overlay) que aparece com o menu */}
+            {/* overlay que aparece com o menu */}
             <div
-                className={`fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity md:hidden ${mobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+                className={`fixed inset-0 bg-black/40 z-40 transition-opacity md:hidden ${mobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
                 onClick={closeMobileMenu}
                 aria-hidden="true"
             ></div>

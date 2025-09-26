@@ -26,12 +26,12 @@ export default function Home() {
                 <Link to="/simulador" className="bg-primary-600 border-none hover:bg-primary-700 text-white text-lg p-6 h-auto rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ">Quero testar minha consulta agora</Link>
             </section>
 
-            <section className="bg-gradient-to-r from-primary-300/10 to-secondary-300/10 p-8 rounded-xl w-[80%] md:w-[40%] m-auto border-primary-600/10 border-2">
+            <section className="bg-gradient-to-r from-primary-300/10 to-secondary-300/10 p-4 rounded-xl w-[80%] md:w-[40%] m-auto border-primary-600/10 border-2">
                 <div className="flex flex-col justify-center items-center gap-4 bg-gradient-to-r from-primary-600/20 to-secondary-600/20 p-8 rounded-xl i">
                 <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto bg-green-600">
                     <CheckCircle className="w-8 h-8 text-white" />
                 </div>
-                    <p className="text-center text-tx-primary">Teleconsulta funcionando perfeitamente</p>
+                    <p className="text-center text-tx-primary">Aqui é a garantia de que sua Teleconsulta está funcionando perfeitamente</p>
                 </div>
             </section>
 
