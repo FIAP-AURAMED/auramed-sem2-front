@@ -1,4 +1,5 @@
 import FaqItem from '../../components/FaqItem'; // Importe o novo componente
+import FormContato from '../../components/FormContato';
 
 export default function CentralAjuda() {
 
@@ -40,6 +41,10 @@ export default function CentralAjuda() {
                         answer={faq.answer}
                     />
                 ))}
+            </section>
+
+            <section>
+                <FormContato/>
             </section>
         </div>
     );
