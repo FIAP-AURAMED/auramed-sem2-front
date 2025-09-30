@@ -1,7 +1,7 @@
-import { useForm, type SubmitHandler } from 'react-hook-form'; // <-- CORREÇÃO AQUI
+import { useForm, type SubmitHandler } from 'react-hook-form'; 
 import { User, Mail, MessageSquare } from 'lucide-react';
 
-// Define a "forma" dos dados do nosso formulário
+
 interface IFormInput {
     nome: string;
     email: string;
@@ -11,11 +11,11 @@ interface IFormInput {
 export default function FormContato() {
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
 
-    // Função que será chamada quando o formulário for enviado com sucesso
+
     const onSubmit: SubmitHandler<IFormInput> = data => {
         console.log("Dados do Contato:", data);
         alert(`Obrigado pelo contato, ${data.nome}! Sua mensagem foi enviada.`);
-        // Aqui você poderia adicionar a lógica para enviar os dados para algum lugar
+
     };
 
     return (
@@ -25,9 +25,8 @@ export default function FormContato() {
                 <p className="text-lg text-tx-secondary">Envie-nos uma mensagem e nossa equipe responderá em breve.</p>
             </div>
 
-            {/* O atributo noValidate é importante para garantir que a validação do browser não interfira na do react-hook-form */}
             <form onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-6 max-w-lg mx-auto">
-                {/* Campo Nome */}
+
                 <div className="flex flex-col gap-2">
                     <label htmlFor="nome" className="text-md font-medium text-tx-primary">Seu Nome</label>
                     <div className="relative border-gray-300 border-2 rounded-md p-2">
@@ -43,11 +42,9 @@ export default function FormContato() {
                             })}
                         />
                     </div>
-                    {/* Exibe a mensagem de erro, conforme o exemplo do professor */}
                     {errors.nome && <small className="text-red-600">{errors.nome.message}</small>}
                 </div>
 
-                {/* Campo E-mail */}
                 <div className="flex flex-col gap-2">
                     <label htmlFor="email" className="text-md font-medium text-tx-primary">Seu E-mail</label>
                     <div className="relative border-gray-300 border-2 rounded-md p-2">
@@ -66,7 +63,6 @@ export default function FormContato() {
                     {errors.email && <small className="text-red-600">{errors.email.message}</small>}
                 </div>
 
-                {/* Campo Mensagem */}
                 <div className="flex flex-col gap-2">
                     <label htmlFor="mensagem" className="text-md font-medium text-tx-primary">Sua Mensagem</label>
                     <div className="relative border-gray-300 border-2 rounded-md p-2">

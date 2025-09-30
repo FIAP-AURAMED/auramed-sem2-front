@@ -8,7 +8,7 @@ export default function Footer() {
         <footer className="bg-gray-500/10 mt-auto " role="contentinfo">
             <div className="container mx-auto px-4 py-8">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {/* Logo and Description */}
+                   
                     <div className="space-y-4">
                         <img
                             src={logo}
@@ -20,7 +20,7 @@ export default function Footer() {
                         </p>
                     </div>
 
-                    {/* Navigation Links */}
+                  
                     <div>
                         <h3 className="font-semibold text-tx-primary-6text-primary-600 mb-4 text-lg">
                             Navegação
@@ -59,7 +59,7 @@ export default function Footer() {
                         </nav>
                     </div>
 
-                    {/* Contact Information */}
+                
                     <div>
                         <h3 className="font-semibold text-primary-600 mb-4 text-lg">
                             Contato
@@ -81,7 +81,7 @@ export default function Footer() {
                     </div>
                 </div>
 
-                {/* Copyright */}
+
                 <div className="border-t border-border mt-8 pt-6 text-center">
                     <p className="text-tx-secondary text-accessible">
                         © 2025 Auramed. Todos os direitos reservados.

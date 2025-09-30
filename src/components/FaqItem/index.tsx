@@ -1,24 +1,24 @@
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 
-// Define as propriedades que o componente receberá
+
 interface FaqItemProps {
     question: string;
     answer: string;
 }
 
 export default function FaqItem({ question, answer }: FaqItemProps) {
-    // Estado para controlar se o item está aberto ou fechado
+    
     const [isOpen, setIsOpen] = useState(false);
 
-    // Função para alternar o estado
+  
     const toggleOpen = () => {
         setIsOpen(!isOpen);
     };
 
     return (
         <div className="border-b-2 border-gray-200 py-4">
-            {/* Botão que contém a pergunta e o ícone */}
+           
             <button
                 onClick={toggleOpen}
                 className="w-full flex justify-between items-center text-left focus:outline-none"
@@ -30,7 +30,6 @@ export default function FaqItem({ question, answer }: FaqItemProps) {
                 />
             </button>
 
-            {/* A resposta, que é exibida ou ocultada com base no estado */}
             <div
                 className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-screen mt-4' : 'max-h-0'}`}
             >

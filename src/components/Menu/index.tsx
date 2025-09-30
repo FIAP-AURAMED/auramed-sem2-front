@@ -39,7 +39,6 @@ export default function Menu() {
                             </button>
                         </Link>
 
-                        {/* Botão Hamburger (Mobile) */}
                         <button
                             className="md:hidden p-2 rounded-md text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
                             onClick={() => setMobileMenuOpen(true)}
@@ -51,14 +50,14 @@ export default function Menu() {
                 </div>
             </div>
 
-            {/* overlay que aparece com o menu */}
+
             <div
                 className={`fixed inset-0 bg-black/40 z-40 transition-opacity md:hidden ${mobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
                 onClick={closeMobileMenu}
                 aria-hidden="true"
             ></div>
 
-            {/* O painel do menu que desliza */}
+
             <div
                 className={`fixed top-0 right-0 h-full w-80 bg-white shadow-xl z-50 transform transition-transform md:hidden ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
                 role="dialog"
@@ -66,7 +65,7 @@ export default function Menu() {
                 aria-label="Menu de navegação móvel"
             >
                 <div className="flex flex-col p-4 space-y-4">
-                    {/* Cabeçalho do Menu Mobile */}
+
                     <div className="flex items-center justify-between mb-6">
                         <h2 className="text-lg font-semibold text-gray-900">Menu</h2>
                         <button
@@ -78,7 +77,7 @@ export default function Menu() {
                         </button>
                     </div>
 
-                    {/* Navegação Mobile */}
+
                     <nav className="flex flex-col space-y-2" role="navigation">
                         <Link to="/" onClick={closeMobileMenu} className={`${mobileNavLinkBaseStyle} ${isActive('/') ? navLinkActiveStyle : navLinkDesktopIdleStyle}`}>Início</Link>
                         <Link to="/como-funciona" onClick={closeMobileMenu} className={`${mobileNavLinkBaseStyle} ${isActive('/como-funciona') ? navLinkActiveStyle : navLinkDesktopIdleStyle}`}>Como Funciona</Link>

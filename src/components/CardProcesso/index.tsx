@@ -1,11 +1,10 @@
-// src/components/landing/ProcessSection.tsx
 
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { CheckCircle, ArrowRight } from 'lucide-react';
 import type { LucideProps } from 'lucide-react';
 
-// Tipagem para os dados de cada passo
+
 interface Step {
     icon: React.ComponentType<LucideProps>;
     title: string;
@@ -15,7 +14,7 @@ interface Step {
     buttonLink: string;
 }
 
-// Props da seção (sem speakText)
+
 interface ProcessoSectionProps {
     title: string;
     steps: Step[];
@@ -44,7 +43,6 @@ export const ProcessoSection: React.FC<ProcessoSectionProps> = ({ title, steps }
                         >
                             <div className="p-8">
                                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center ">
-                                    {/* Lado do Conteúdo */}
                                     <div className="space-y-6">
                                         <div className="flex items-center gap-4">
                                             <div className={`w-16 h-16 rounded-full flex items-center justify-center bg-primary-600/10`}>
@@ -79,7 +77,6 @@ export const ProcessoSection: React.FC<ProcessoSectionProps> = ({ title, steps }
                                         </Link>
                                     </div>
 
-                                    {/* Lado da Imagem */}
                                     <div className={`hidden lg:block bg-gradient-to-r from-primary-600/20 to-secondary-600/20 rounded-2xl p-2 text-center`}>
                                         <div className="flex items-center justify-center w-50 h-80 m-auto">
                                             <step.icon className={`h-20 w-20 text-primary-600`} aria-hidden="true" />
