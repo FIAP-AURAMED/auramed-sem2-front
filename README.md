@@ -61,23 +61,23 @@ O projeto foi estruturado utilizando uma arquitetura modular para garantir escal
 
 Para rodar este projeto localmente, siga os passos abaixo:
 
-1.  *Clone o repositório:*
-    bash
-    git clone [https://github.com/FIAP-AURAMED/auramed-sem2-front.git](https://github.com/FIAP-AURAMED/auramed-sem2-front.git)
-    
-2.  *Navegue até o diretório do projeto:*
-    bash
+1.  **Clone o repositório:**
+    ```bash
+    git clone [https://github.com/grazialencar/auramed-sem2-front.git](https://github.com/grazialencar/auramed-sem2-front.git)
+    ```
+2.  **Navegue até o diretório do projeto:**
+    ```bash
     cd auramed-sem2-front
-    
-3.  *Instale as dependências:*
-    bash
+    ```
+3.  **Instale as dependências:**
+    ```bash
     npm install
-    
-4.  *Execute o servidor de desenvolvimento:*
-    bash
+    ```
+4.  **Execute o servidor de desenvolvimento:**
+    ```bash
     npm run dev
-    
-5.  Abra seu navegador e acesse http://localhost:5173 (ou a porta indicada no seu terminal).
+    ```
+5.  Abra seu navegador e acesse `http://localhost:5173` (ou a porta indicada no seu terminal).
 
 ---
 
