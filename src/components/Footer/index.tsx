@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import { Mail, Phone} from 'lucide-react';
+import { Mail, Phone } from 'lucide-react';
 import logo from '../../assets/logo.png';
 
 export default function Footer() {
@@ -8,7 +8,7 @@ export default function Footer() {
         <footer className="bg-gray-500/10 mt-auto " role="contentinfo">
             <div className="container mx-auto px-4 py-8">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                   
+
                     <div className="space-y-4">
                         <img
                             src={logo}
@@ -20,7 +20,7 @@ export default function Footer() {
                         </p>
                     </div>
 
-                  
+
                     <div>
                         <h3 className="font-semibold text-tx-primary-6text-primary-600 mb-4 text-lg">
                             Navegação
@@ -59,7 +59,7 @@ export default function Footer() {
                         </nav>
                     </div>
 
-                
+
                     <div>
                         <h3 className="font-semibold text-primary-600 mb-4 text-lg">
                             Contato

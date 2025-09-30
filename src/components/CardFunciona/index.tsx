@@ -1,5 +1,5 @@
 
-import { Link } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
 
 
 interface CardFuncionaProps {
@@ -14,17 +14,17 @@ interface CardFuncionaProps {
 
 export default function CardFunciona({ icon: Icon, title, description, buttonText, buttonLink, colorTheme = 'pink', className, }: CardFuncionaProps) {
 
-   
+
     const colorStyles = {
         pink: {
             bg: 'bg-primary-600/10',
-            text: 'text-primary-600', 
+            text: 'text-primary-600',
         },
         yellow: {
             bg: 'bg-secondary-600/10',
             text: 'text-secondary-600',
         },
-        
+
     };
 
     const styles = colorStyles[colorTheme] || colorStyles.pink;

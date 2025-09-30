@@ -8,17 +8,17 @@ interface FaqItemProps {
 }
 
 export default function FaqItem({ question, answer }: FaqItemProps) {
-    
+
     const [isOpen, setIsOpen] = useState(false);
 
-  
+
     const toggleOpen = () => {
         setIsOpen(!isOpen);
     };
 
     return (
         <div className="border-b-2 border-gray-200 py-4">
-           
+
             <button
                 onClick={toggleOpen}
                 className="w-full flex justify-between items-center text-left focus:outline-none"
