@@ -1,6 +1,7 @@
 import { useForm, type SubmitHandler } from 'react-hook-form'; 
 import { Lock, Shield, Stethoscope, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from 'react';
 
 interface IFormInput {
     email: string;
@@ -8,6 +9,14 @@ interface IFormInput {
 }
 
 export default function LoginProfissional() {
+
+  useEffect(() => {
+          document.title = 'AuraMed | Login Profissional';
+          return () => {
+              document.title = 'AuraMed';
+          };
+      }, []);
+
     const navigate = useNavigate();
     
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();

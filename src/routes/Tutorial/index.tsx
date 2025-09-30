@@ -1,8 +1,17 @@
+import { useEffect } from "react";
 import { TutorialPassos } from "../../components/TutorialPasso";
 
 
 
 export default function Tutorial() {
+
+    useEffect(() => {
+            document.title = 'AuraMed | Tutorial';
+            return () => {
+                document.title = 'AuraMed';
+            };
+        }, []);
+
     return (
         <div className="min-h-screen flex flex-col items-center justify-center p-4">
             <h1 className="text-4xl font-bold text-tx-primary mb-2 text-center">

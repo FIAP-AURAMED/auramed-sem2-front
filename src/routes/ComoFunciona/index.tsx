@@ -2,9 +2,17 @@ import { BookOpen, Camera, Lightbulb, MessageCircle, Shield, Stethoscope, Users,
 import { ProcessoSection } from "../../components/CardProcesso";
 import CardFunciona from "../../components/CardFunciona";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 
 export default function ComoFunciona() {
+
+    useEffect(() => {
+            document.title = 'AuraMed | Como Funciona';
+            return () => {
+                document.title = 'AuraMed';
+            };
+        }, []);
 
     const mainSteps = [
         {

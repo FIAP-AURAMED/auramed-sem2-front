@@ -1,9 +1,17 @@
+import { useEffect } from 'react';
 import FaqItem from '../../components/FaqItem'; // Importe o novo componente
 import FormContato from '../../components/FormContato';
 
 export default function CentralAjuda() {
 
-    // Lista de perguntas e respostas
+    useEffect(() => {
+            document.title = 'AuraMed | Central de Ajuda';
+            return () => {
+                document.title = 'AuraMed';
+            };
+        }, []);
+
+    
     const faqData = [
         {
             question: 'Como testo minha câmera e áudio?',

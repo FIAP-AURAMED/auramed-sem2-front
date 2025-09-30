@@ -1,5 +1,14 @@
+import { useEffect } from "react";
 
 export default function ProfissionalLayout() {
+
+  useEffect(() => {
+          document.title = 'AuraMed | Profissional';
+          return () => {
+              document.title = 'AuraMed';
+          };
+      }, []);
+
   return (
     <div className="min-h-screen flex flex-col">
       

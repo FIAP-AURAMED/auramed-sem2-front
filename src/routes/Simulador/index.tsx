@@ -14,6 +14,14 @@ const MAX_CENTER_OFFSET_PERCENTAGE = 0.20;
 const MAX_TILT_DIFFERENCE_PX = 20;
 
 const FaceApiSimulator: React.FC = () => {
+
+    useEffect(() => {
+        document.title = 'AuraMed | Simulador';
+        return () => {
+            document.title = 'AuraMed';
+        };
+    }, []);
+
     const videoRef = useRef<HTMLVideoElement>(null);
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
 

@@ -3,9 +3,17 @@ import CardParticipante from "../../components/CardParticipantes";
 import imgDiego from "../../assets/image-diego.png";
 import imgGrazi from "../../assets/image-grazi.png";
 import imgIsa from "../../assets/img-isa.png";
+import { useEffect } from "react";
 
 
 export default function Sobre() {
+
+    useEffect(() => {
+        document.title = 'AuraMed | Sobre o Projeto';
+        return () => {
+            document.title = 'AuraMed';
+        };
+    }, []);
 
     return (
         <div>

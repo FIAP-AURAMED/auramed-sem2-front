@@ -2,9 +2,17 @@ import { Link } from "react-router-dom";
 import { AccessibilityIcon, BookOpen, Camera, CheckCircle, Heart, MessageCircle, Users, Volume2, ZoomIn } from "lucide-react";
 import CardBeneficios from "../../components/CardBeneficios";
 import CardFunciona from "../../components/CardFunciona";
+import { useEffect } from "react";
 
 
 export default function Home() {
+
+    useEffect(() => {
+            document.title = 'AuraMed | Home';
+            return () => {
+                document.title = 'AuraMed';
+            };
+        }, []);
 
     const card1beneficios = [
         'Menos ansiedade com a tecnologia',
