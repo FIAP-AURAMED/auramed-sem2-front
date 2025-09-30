@@ -78,3 +78,16 @@ Para rodar este projeto localmente, siga os passos abaixo:
 
 ---
 
+## 👥 Integrantes
+
+| Nome | RM | Turma | GitHub | LinkedIn |
+| :--- | :--- | :--- | :--- | :--- |
+| Diego Andrade | 566385 | 1TDSPO | [diandrade](https://github.com/diandrade) | [LinkedIn](https://www.linkedin.com/in/andradedossantosdiego/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app) |
+| Grazielle Alencar | 561529 | 1TDSPO | [grazialencar](https://github.com/grazialencar) | [LinkedIn](https://www.linkedin.com/in/grazielle-alencar/) |
+| Isabela Yamauchi | 560310 | 1TDSPO | [IsabelaYamauchi](https://github.com/IsabelaYamauchi) | [LinkedIn](https://www.linkedin.com/in/isabelayamauchi/) |
+
+---
+
+## Repositório no GitHub
+
+🔗 [https://github.com/FIAP-AURAMED/auramed-sem2-front.git](https://github.com/FIAP-AURAMED/auramed-sem2-front.git) 
