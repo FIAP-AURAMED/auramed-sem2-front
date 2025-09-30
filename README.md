@@ -63,7 +63,7 @@ Para rodar este projeto localmente, siga os passos abaixo:
 
 1.  **Clone o repositório:**
     ```bash
-    git clone https://github.com/grazialencar/auramed-sem2-front.git
+    git clone https://github.com/FIAP-AURAMED/auramed-sem2-front.git
     ```
 2.  **Navegue até o diretório do projeto:**
     ```bash
@@ -77,7 +77,7 @@ Para rodar este projeto localmente, siga os passos abaixo:
     ```bash
     npm run dev
     ```
-5.  Abra seu navegador e acesse `http://localhost:5173` (ou a porta indicada no seu terminal).
+5.  Abra seu navegador e acesse a porta indicada no seu terminal.
 
 ---
 
