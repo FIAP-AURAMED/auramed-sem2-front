@@ -1,13 +1,12 @@
 import github from "../../assets/github.svg" 
 import linkedin from "../../assets/linkedin.svg"
 
-// 2. Props atualizadas para serem mais específicas
 interface CardParticipanteProps {
     img: string;
-    name: string; // 'title' renomeado para 'name' para mais clareza
-    role: string; // 'description' renomeado para 'role'
-    githubUrl?: string; // URL específica e opcional para o GitHub
-    linkedinUrl?: string; // URL específica e opcional para o LinkedIn
+    name: string;
+    role: string; 
+    githubUrl?: string; 
+    linkedinUrl?: string; 
     className?: string;
 }
 
@@ -28,26 +27,22 @@ export default function CardParticipante({
                 ${className}
             `}
         >
-            {/* 3. Imagem do participante com estilos corrigidos */}
+            
             <img
                 src={img}
                 alt={`Foto de ${name}`}
-                className='w-32 h-32 rounded-full object-cover mb-2' // Corrigido 'redoude-' e ajustado tamanho
+                className='w-32 h-32 rounded-full object-cover mb-2' 
             />
 
-            {/* Nome do Participante */}
             <h3 className="text-lg font-semibold text-gray-800">
                 {name}
             </h3>
 
-            {/* Descrição/Cargo */}
             <p className="text-gray-600 flex-grow min-h-[40px] text-sm">
                 {role}
             </p>
 
-            {/* 4. Ícones e Links Condicionais */}
             <div className='flex items-center justify-center gap-4 mt-2'>
-                {/* Renderiza o ícone do GitHub APENAS se githubUrl for fornecido */}
                 {githubUrl && (
                     <a
                         href={githubUrl}
@@ -60,7 +55,6 @@ export default function CardParticipante({
                     </a>
                 )}
 
-                {/* Renderiza o ícone do LinkedIn APENAS se linkedinUrl for fornecido */}
                 {linkedinUrl && (
                     <a
                         href={linkedinUrl}
