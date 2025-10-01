@@ -2,6 +2,8 @@
 
 [🔗 *Acesse o site implantado aqui*](https://auramed-sem2-front-beige.vercel.app/)
 
+[*Link vídeo do youtube*](https://youtu.be/pOOgVAxnN2Q)
+
 ---
 
 ## 📌 Objetivo do Projeto
