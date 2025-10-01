@@ -28,8 +28,12 @@ const router = createBrowserRouter(
         { path: "/simulador", element: <Simulador /> },
         { path: "/como-funciona", element: <ComoFunciona /> },
         { path: "/login-profissional", element: <LoginProfissional /> },
-        { path: "/profissional", element: <ProfissionalLayout /> },
       ],
+    },
+    {
+      path: "/profissional/:id", 
+      element: <ProfissionalLayout />,
+      errorElement: <NotFound />,
     },
   ],
   { basename: import.meta.env.BASE_URL }
