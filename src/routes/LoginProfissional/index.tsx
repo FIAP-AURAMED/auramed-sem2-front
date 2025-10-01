@@ -1,7 +1,9 @@
-import { useForm, type SubmitHandler } from 'react-hook-form'; 
+import { useForm, type SubmitHandler } from 'react-hook-form';
 import { Lock, Shield, Stethoscope, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from 'react';
+
+import { listaProfissionais } from '../../data/listaProfissionais'; 
 
 interface IFormInput {
     email: string;
@@ -9,23 +11,29 @@ interface IFormInput {
 }
 
 export default function LoginProfissional() {
-
-  useEffect(() => {
-          document.title = 'AuraMed | Login Profissional';
-          return () => {
-              document.title = 'AuraMed';
-          };
-      }, []);
+    useEffect(() => {
+        document.title = 'AuraMed | Login Profissional';
+        return () => {
+            document.title = 'AuraMed';
+        };
+    }, []);
 
     const navigate = useNavigate();
-    
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
 
-    
     const onSubmit: SubmitHandler<IFormInput> = data => {
-        console.log('Dados de Login Validados:', data);
-        alert('Login realizado com sucesso!');
-        navigate('/profissional');
+        console.log('Tentativa de login com:', data);
+
+        const professionalFound = listaProfissionais.find(
+            (prof) => prof.email === data.email && prof.senha === data.senha_login
+        );
+
+        if (professionalFound) {
+            alert(`Login realizado com sucesso! Bem-vindo(a), ${professionalFound.nome}.`);
+            navigate(`/profissional/${professionalFound.id}`);
+        } else {
+            alert('E-mail ou senha inválidos. Tente novamente.');
+        }
     };
 
     return (
@@ -52,7 +60,7 @@ export default function LoginProfissional() {
                             <input
                                 id="email"
                                 type="email"
-                                placeholder="seu.email@imrea.org.br"
+                                placeholder="email@exemplo.com"
                                 className="pl-10 text-sm w-full bg-transparent focus-visible:outline-none"
                                 {...register("email", {
                                     required: "O e-mail é obrigatório",
@@ -70,11 +78,10 @@ export default function LoginProfissional() {
                             <input
                                 id="password"
                                 type="password"
-                                placeholder="Sua senha"
+                                placeholder="**********"
                                 className="pl-10 w-full text-sm bg-transparent focus-visible:outline-none"
                                 {...register("senha_login", {
-                                    required: "A senha é obrigatória",
-                                    minLength: { value: 6, message: "A senha deve ter no mínimo 6 caracteres" }
+                                    required: "A senha é obrigatória"
                                 })}
                             />
                         </div>
