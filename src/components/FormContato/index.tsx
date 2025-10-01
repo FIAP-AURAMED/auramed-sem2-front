@@ -19,7 +19,7 @@ export default function FormContato() {
     };
 
     return (
-        <section className="w-full mt-16 p-8 border-gray-300 border-2 rounded-xl bg-gray-400/10">
+        <section className="w-full lg:w-150 m-auto mt-16 p-8 border-gray-300 border-2 rounded-xl bg-gray-400/10">
             <div className="text-center mb-8">
                 <h2 className="text-3xl font-bold text-tx-primary">Ainda com dúvidas?</h2>
                 <p className="text-lg text-tx-secondary">Envie-nos uma mensagem e nossa equipe responderá em breve.</p>
