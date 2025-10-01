@@ -1,6 +1,6 @@
 # AuraMed – Solução de Preparo para Teleconsultas
 
-[🔗 *Acesse o site implantado aqui*](auramed-sem2-front.vercel.app)
+[🔗 *Acesse o site implantado aqui*](https://auramed-sem2-front-beige.vercel.app/)
 
 ---
 
