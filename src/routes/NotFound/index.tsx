@@ -1,7 +1,15 @@
 import { Link } from 'react-router-dom';
 import { AlertTriangle, Home } from 'lucide-react';
+import { useEffect } from 'react';
 
 export default function NotFound() {
+
+    useEffect(() => {
+        document.title = 'AuraMed | 404 Not Found';
+        return () => {
+            document.title = 'AuraMed';
+        };
+    }, []);
 
     return (
         <div className="flex flex-col items-center justify-center min-h-[70vh] text-center px-4">
