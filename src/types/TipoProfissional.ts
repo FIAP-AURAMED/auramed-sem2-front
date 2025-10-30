@@ -1,4 +1,3 @@
-
 export type TipoProfissional  = {
     id:number;
     nome:string;
