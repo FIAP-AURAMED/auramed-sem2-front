@@ -31,7 +31,7 @@ interface LoginResponse {
         dataCadastro: string;
     };
 }
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+const API_URL = import.meta.env.VITE_API_URL || 'https://auramed-backend-6yw9.onrender.com';
 
 export default function LoginProfissional() {
     const [isLoading, setIsLoading] = useState(false);
@@ -143,7 +143,7 @@ export default function LoginProfissional() {
                             <input
                                 id="email"
                                 type="email"
-                                placeholder="joao.silva@hospital.com"
+                                placeholder="Insira seu e-mail institucional"
                                 className="pl-10 text-sm w-full bg-transparent focus-visible:outline-none"
                                 {...register("email", {
                                     required: "O e-mail é obrigatório",
@@ -162,7 +162,7 @@ export default function LoginProfissional() {
                             <input
                                 id="password"
                                 type="password"
-                                placeholder="senha123"
+                                placeholder="Insira sua senha"
                                 className="pl-10 w-full text-sm bg-transparent focus-visible:outline-none"
                                 {...register("senha_login", {
                                     required: "A senha é obrigatória"
