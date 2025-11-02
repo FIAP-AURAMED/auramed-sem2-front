@@ -31,7 +31,7 @@ interface LoginResponse {
         dataCadastro: string;
     };
 }
-const API_URL = import.meta.env.VITE_API_URL || 'https://auramed-backend-6yw9.onrender.com';
+const API_URL = import.meta.env.VITE_API_URL ?? 'https://auramed-backend-6yw9.onrender.com';
 
 export default function LoginProfissional() {
     const [isLoading, setIsLoading] = useState(false);
