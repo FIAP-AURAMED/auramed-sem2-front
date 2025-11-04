@@ -9,3 +9,11 @@ interface Message {
   categoria?: string;
   sentimento?: string;
 }
+
+export default function Chatbot() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [inputMessage, setInputMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [userId, setUserId] = useState('');
+  const messagesEndRef = useRef<HTMLDivElement>(null);
