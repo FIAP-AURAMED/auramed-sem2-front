@@ -24,3 +24,9 @@ const storedUserId = localStorage.getItem('auramed_userId') ||
 setUserId(storedUserId);
 localStorage.setItem('auramed_userId', storedUserId);
 }, []);
+
+useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
+}
