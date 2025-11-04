@@ -17,3 +17,10 @@ export default function Chatbot() {
   const [isLoading, setIsLoading] = useState(false);
   const [userId, setUserId] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+useEffect(() => {
+const storedUserId = localStorage.getItem('auramed_userId') || 
+                    `user_${Math.random().toString(36).substr(2, 9)}`;
+setUserId(storedUserId);
+localStorage.setItem('auramed_userId', storedUserId);
+}, []);
