@@ -29,4 +29,62 @@ useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+const sendMessage = async () => {
+if (!inputMessage.trim() || isLoading) return;
+
+const userMessage: Message = {
+    id: Date.now().toString(),
+    text: inputMessage,
+    isUser: true,
+    timestamp: new Date()
+};
+
+setMessages(prev => [...prev, userMessage]);
+setInputMessage('');
+setIsLoading(true);
+
+try {
+    const response = await fetch('http://localhost:8080/chat', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+        usuarioId: userId,
+        mensagem: inputMessage
+    })
+    });
+
+    if (!response.ok) throw new Error('Erro na resposta do servidor');
+
+    const data = await response.json();
+
+    const botMessage: Message = {
+    id: (Date.now() + 1).toString(),
+    text: data.resposta,
+    isUser: false,
+    timestamp: new Date(),
+    categoria: data.categoria,
+    sentimento: data.sentimento
+    };
+
+    setMessages(prev => [...prev, botMessage]);
+} catch (error) {
+    console.error('Erro:', error);
+    const errorMessage: Message = {
+    id: (Date.now() + 1).toString(),
+    text: 'Desculpe, estou com problemas técnicos no momento. Por favor, tente novamente em alguns instantes.',
+    isUser: false,
+    timestamp: new Date()
+    };
+    setMessages(prev => [...prev, errorMessage]);
+} finally {
+    setIsLoading(false);
+}
+};
+
+
+
+
+
 }
