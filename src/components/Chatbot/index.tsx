@@ -111,4 +111,11 @@ export default function Chatbot() {
       minute: "2-digit",
     });
   };
+
+  const quickSuggestions = [
+    'Quais são os sintomas da gripe?',
+    'Preciso marcar uma consulta',
+    'Para que serve o paracetamol?',
+    'Estou com dor de cabeça'
+  ];
 }
