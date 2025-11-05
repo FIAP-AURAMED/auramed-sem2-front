@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import FaqItem from '../../components/FaqItem'; // Importe o novo componente
+import FaqItem from '../../components/FaqItem';
 import FormContato from '../../components/FormContato';
 
 export default function CentralAjuda() {
@@ -41,7 +41,6 @@ export default function CentralAjuda() {
             </section>
 
             <section className="max-w-3xl mx-auto">
-                {/* Mapeia os dados do FAQ para o componente FaqItem */}
                 {faqData.map((faq, index) => (
                     <FaqItem
                         key={index}
