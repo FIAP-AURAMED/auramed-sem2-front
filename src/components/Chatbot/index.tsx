@@ -155,8 +155,6 @@ export default function Chatbot() {
               <X className="w-5 h-5" />
             </button>
           </div>
-
-          {/* Área de Mensagens */}
           <div className="flex-1 overflow-y-auto p-4 bg-gray-50 space-y-4">
             {messages.map((message) => (
               <div
@@ -214,5 +212,21 @@ export default function Chatbot() {
             
             <div ref={messagesEndRef} />
           </div>
+          {messages.length <= 1 && (
+            <div className="px-4 pt-2 border-t border-gray-200 bg-white">
+              <p className="text-xs text-gray-600 mb-2 font-medium">Sugestões rápidas:</p>
+              <div className="flex flex-wrap gap-2">
+                {quickSuggestions.map((suggestion, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setInputMessage(suggestion)}
+                    className="text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-full transition-colors border border-gray-300"
+                  >
+                    {suggestion}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
   
 
