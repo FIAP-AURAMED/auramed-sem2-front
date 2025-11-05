@@ -228,5 +228,38 @@ export default function Chatbot() {
               </div>
             </div>
           )}
+
+          <div className="p-4 border-t border-gray-200 bg-white">
+            <div className="flex gap-2">
+              <div className="flex-1 relative">
+                <textarea
+                  value={inputMessage}
+                  onChange={(e) => setInputMessage(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  placeholder="Digite sua mensagem..."
+                  className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-2xl resize-none focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  rows={1}
+                  disabled={isLoading}
+                  style={{ minHeight: '48px', maxHeight: '120px' }}
+                />
+              </div>
+              <button
+                onClick={sendMessage}
+                disabled={!inputMessage.trim() || isLoading}
+                className="flex items-center justify-center w-12 h-12 bg-primary-600 hover:bg-primary-700 disabled:bg-gray-400 disabled:cursor-not-allowed rounded-xl transition-colors flex-shrink-0"
+                aria-label="Enviar mensagem"
+              >
+                <Send className="w-5 h-5 text-white" />
+              </button>
+            </div>
+            <p className="text-xs text-gray-500 mt-2 text-center">
+              AuraMed - Seu assistente médico virtual 24h
+            </p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
   
 
