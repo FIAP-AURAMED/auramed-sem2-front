@@ -3,6 +3,8 @@ import FaqItem from '../../components/FaqItem';
 import FormContato from '../../components/FormContato';
 import { RefreshCw, TrendingUp, HelpCircle } from 'lucide-react';
 
+const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8080';
+
 export default function CentralAjuda() {
     const [faqData, setFaqData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -21,8 +23,8 @@ export default function CentralAjuda() {
         try {
             setLoading(true);
             setError(null);
-
-            const response = await fetch('http://localhost:8080/api/faq/perguntas-frequentes?limite=8');
+            
+            const response = await fetch(`${API_URL}/api/faq/perguntas-frequentes?limite=8`);
 
             if (!response.ok) {
                 throw new Error('Erro ao carregar perguntas frequentes');
