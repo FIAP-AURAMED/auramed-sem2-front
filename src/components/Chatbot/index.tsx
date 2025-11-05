@@ -118,4 +118,18 @@ export default function Chatbot() {
     'Para que serve o paracetamol?',
     'Estou com dor de cabeça'
   ];
-}
+
+  return (
+    <div className="fixed bottom-6 right-6 z-50">
+      {/* Botão de toggle */}
+      {!isOpen && (
+        <button
+          onClick={toggleChat}
+          className="flex items-center justify-center w-14 h-14 bg-primary-600 hover:bg-primary-700 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
+          aria-label="Abrir chat com AuraMed"
+        >
+          <MessageCircle className="w-6 h-6 text-white" />
+        </button>
+      )}
+  
+
