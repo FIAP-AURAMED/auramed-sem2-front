@@ -70,9 +70,10 @@ export default function Chatbot() {
 
       setMessages(prev => [...prev, botMessage]);
     } catch (error) {
+      console.error('Erro ao enviar mensagem:', error);
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: 'Desculpe, estou com problemas técnicos. Tente novamente.',
+        text: 'Desculpe, estou com problemas técnicos. Por favor, tente novamente em alguns instantes.',
         isUser: false,
         timestamp: new Date()
       };
@@ -94,7 +95,7 @@ export default function Chatbot() {
     if (!isOpen && messages.length === 0) {
       const welcomeMessage: Message = {
         id: 'welcome',
-        text: 'Olá! Sou o AuraMed, seu assistente médico virtual. Como posso ajudar?',
+        text: 'Olá! Sou a Clara, assistente virtual do IMREA. Posso ajudar com agendamentos, informações sobre telemedicina, horários de funcionamento e orientações. Como posso ajudar?',
         isUser: false,
         timestamp: new Date()
       };
@@ -110,11 +111,16 @@ export default function Chatbot() {
   };
 
   const quickSuggestions = [
-    'Sintomas da gripe',
-    'Marcar consulta',
-    'Para que serve paracetamol?',
-    'Estou com dor'
+    'Como agendar consulta?',
+    'Horário de funcionamento',
+    'Teleconsulta',
+    'Documentos necessários',
+    'Contato IMREA'
   ];
+
+  const handleSuggestionClick = (suggestion: string) => {
+    setInputMessage(suggestion);
+  };
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
@@ -122,7 +128,7 @@ export default function Chatbot() {
         <button
           onClick={toggleChat}
           className="flex items-center justify-center w-14 h-14 bg-primary-600 hover:bg-primary-700 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
-          aria-label="Abrir chat com AuraMed"
+          aria-label="Abrir chat com Clara"
         >
           <MessageCircle className="w-6 h-6 text-white" />
         </button>
@@ -136,7 +142,7 @@ export default function Chatbot() {
                 <MessageCircle className="w-4 h-4 text-white" />
               </div>
               <div>
-                <h3 className="font-semibold text-sm">AuraMed Assistant</h3>
+                <h3 className="font-semibold text-sm">Clara - IMREA</h3>
                 <p className="text-white/80 text-xs">Online</p>
               </div>
             </div>
@@ -166,8 +172,8 @@ export default function Chatbot() {
                     {!message.isUser && (
                       <Bot className="w-3 h-3 mt-1 text-primary-600 flex-shrink-0" />
                     )}
-                    <div className="flex-1">
-                      <p className="text-xs leading-relaxed whitespace-pre-wrap">
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs leading-relaxed whitespace-pre-wrap break-words">
                         {message.text}
                       </p>
                       <div className="flex items-center justify-between mt-1 gap-2">
@@ -175,7 +181,7 @@ export default function Chatbot() {
                           {formatTime(message.timestamp)}
                         </span>
                         {!message.isUser && message.categoria && (
-                          <span className="text-xs bg-primary-100 text-primary-700 px-1.5 py-0.5 rounded-full capitalize">
+                          <span className="text-xs bg-primary-100 text-primary-700 px-1.5 py-0.5 rounded-full capitalize flex-shrink-0">
                             {message.categoria.toLowerCase().replace(/_/g, ' ')}
                           </span>
                         )}
@@ -209,13 +215,13 @@ export default function Chatbot() {
 
           {messages.length <= 1 && (
             <div className="px-3 pt-2 border-t border-gray-200 bg-white">
-              <p className="text-xs text-gray-600 mb-1 font-medium">Sugestões:</p>
+              <p className="text-xs text-gray-600 mb-1 font-medium">Sugestões rápidas:</p>
               <div className="flex flex-wrap gap-1">
                 {quickSuggestions.map((suggestion, index) => (
                   <button
                     key={index}
-                    onClick={() => setInputMessage(suggestion)}
-                    className="text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-2 py-1 rounded-full transition-colors border border-gray-300"
+                    onClick={() => handleSuggestionClick(suggestion)}
+                    className="text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-2 py-1 rounded-full transition-colors border border-gray-300 whitespace-nowrap"
                   >
                     {suggestion}
                   </button>
@@ -235,7 +241,11 @@ export default function Chatbot() {
                   className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-2xl resize-none focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
                   rows={1}
                   disabled={isLoading}
-                  style={{ minHeight: '40px', maxHeight: '80px' }}
+                  style={{ 
+                    minHeight: '40px', 
+                    maxHeight: '80px',
+                    overflowY: 'auto'
+                  }}
                 />
               </div>
               <button
