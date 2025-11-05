@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
-
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 interface FaqItemProps {
     question: string;
@@ -8,35 +7,27 @@ interface FaqItemProps {
 }
 
 export default function FaqItem({ question, answer }: FaqItemProps) {
-
     const [isOpen, setIsOpen] = useState(false);
 
-
-    const toggleOpen = () => {
-        setIsOpen(!isOpen);
-    };
-
     return (
-        <div className="border-b-2 border-gray-200 py-4">
-
+        <div className="border border-gray-200 rounded-lg mb-4 transition-all duration-200 hover:border-gray-300">
             <button
-                onClick={toggleOpen}
-                className="w-full flex justify-between items-center text-left focus:outline-none"
-                aria-expanded={isOpen}
+                className="flex justify-between items-center w-full p-4 text-left bg-white hover:bg-gray-50 rounded-lg transition-colors"
+                onClick={() => setIsOpen(!isOpen)}
             >
-                <h3 className="text-lg font-semibold text-tx-primary">{question}</h3>
-                <ChevronDown
-                    className={`w-6 h-6 text-primary-600 transform transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
-                />
+                <span className="font-medium text-tx-primary pr-4">{question}</span>
+                {isOpen ? (
+                    <ChevronUp className="w-5 h-5 text-gray-500 flex-shrink-0" />
+                ) : (
+                    <ChevronDown className="w-5 h-5 text-gray-500 flex-shrink-0" />
+                )}
             </button>
-
-            <div
-                className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-screen mt-4' : 'max-h-0'}`}
-            >
-                <p className="text-tx-secondary">
-                    {answer}
-                </p>
-            </div>
+            
+            {isOpen && (
+                <div className="p-4 bg-gray-50 border-t border-gray-200">
+                    <p className="text-tx-secondary leading-relaxed">{answer}</p>
+                </div>
+            )}
         </div>
     );
 }

@@ -2,18 +2,19 @@ import { useEffect, useState } from 'react';
 import FaqItem from '../../components/FaqItem';
 import FormContato from '../../components/FormContato';
 import { RefreshCw, TrendingUp, HelpCircle } from 'lucide-react';
+import type { PerguntaFrequente } from '../../types/faq';
 
 const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8080';
 
 export default function CentralAjuda() {
-    const [faqData, setFaqData] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [faqData, setFaqData] = useState<PerguntaFrequente[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         document.title = 'AuraMed | Central de Ajuda';
         carregarPerguntasFrequentes();
-
+        
         return () => {
             document.title = 'AuraMed';
         };
@@ -25,14 +26,14 @@ export default function CentralAjuda() {
             setError(null);
             
             const response = await fetch(`${API_URL}/api/faq/perguntas-frequentes?limite=8`);
-
+            
             if (!response.ok) {
                 throw new Error('Erro ao carregar perguntas frequentes');
             }
-
-            const data = await response.json();
+            
+            const data: PerguntaFrequente[] = await response.json();
             setFaqData(data);
-
+            
         } catch (err) {
             console.error('Erro:', err);
             setError('Não foi possível carregar as perguntas frequentes. Usando perguntas padrão.');
@@ -42,42 +43,44 @@ export default function CentralAjuda() {
         }
     };
 
-    const getPerguntasPadrao = () => [
+    const getPerguntasPadrao = (): PerguntaFrequente[] => [
         {
             pergunta: 'Como agendar uma consulta?',
             resposta: 'Entre em contato pelo telefone (11) 5180-7800 ou através do nosso WhatsApp. Nossa equipe terá prazer em ajudar você!',
             frequencia: 1,
-            categoria: 'AGENDAMENTO'
+            categoria: 'Agendamento (1 vez)'
         },
         {
             pergunta: 'Quais são os horários de funcionamento?',
             resposta: 'O IMREA funciona de segunda a sábado, das 7h às 19h. Aos domingos e feriados estamos fechados.',
             frequencia: 1,
-            categoria: 'INFORMACAO'
+            categoria: 'Horário de Funcionamento (1 vez)'
         },
         {
             pergunta: 'Vocês fazem teleconsultas?',
             resposta: 'Sim! Oferecemos atendimento por telemedicina. Você precisa de um dispositivo com câmera, microfone e conexão com internet.',
             frequencia: 1,
-            categoria: 'TELECONSULTA'
+            categoria: 'Teleconsulta (1 vez)'
         },
         {
             pergunta: 'Quais documentos preciso levar?',
             resposta: 'Para a consulta, tenha em mãos: RG, CPF, Cartão do SUS e exames recentes se tiver.',
             frequencia: 1,
-            categoria: 'DOCUMENTACAO'
+            categoria: 'Documentação (1 vez)'
         }
     ];
 
-    const getCategoriaColor = (categoria) => {
-        const cores = {
+    const getCategoriaColor = (categoria: string) => {
+        const cores: { [key: string]: string } = {
             'AGENDAMENTO': 'bg-blue-100 text-blue-800',
             'TELECONSULTA': 'bg-green-100 text-green-800',
             'INFORMACAO': 'bg-purple-100 text-purple-800',
             'DOCUMENTACAO': 'bg-orange-100 text-orange-800',
             'GERAL': 'bg-gray-100 text-gray-800'
         };
-        return cores[categoria] || cores['GERAL'];
+        
+        const categoriaBase = categoria.split(' ')[0].toUpperCase();
+        return cores[categoriaBase] || cores['GERAL'];
     };
 
     return (
@@ -90,7 +93,7 @@ export default function CentralAjuda() {
                 <p className="text-xl text-tx-secondary max-w-2xl mx-auto mt-4">
                     Perguntas mais frequentes dos nossos pacientes
                 </p>
-
+                
                 <div className="flex items-center justify-center gap-4 mt-6">
                     <button
                         onClick={carregarPerguntasFrequentes}
@@ -100,7 +103,7 @@ export default function CentralAjuda() {
                         <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
                         {loading ? 'Atualizando...' : 'Atualizar FAQ'}
                     </button>
-
+                    
                     <div className="flex items-center gap-2 text-sm text-tx-secondary">
                         <TrendingUp className="w-4 h-4" />
                         <span>Baseado nas perguntas reais dos pacientes</span>
@@ -130,15 +133,19 @@ export default function CentralAjuda() {
                         {faqData.map((faq, index) => (
                             <div key={index} className="mb-4">
                                 <div className="flex items-center gap-3 mb-2">
-                                    <span className="flex items-center justify-center w-6 h-6 bg-primary-600 text-white rounded-full text-xs font-bold">
-                                        #{index + 1}
+                                    <span className="flex items-center justify-center w-6 h-6 bg-primary-100 text-primary-700 rounded-full text-xs font-bold">
+                                        {index + 1}
                                     </span>
-                                    <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-semibold">
-                                        {faq.categoria}
-                                    </span>
-                                    <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">
-                                        {faq.frequencia} {faq.frequencia === 1 ? 'pergunta' : 'perguntas'}
-                                    </span>
+                                    {faq.frequencia > 1 && (
+                                        <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">
+                                            {faq.frequencia} pessoas perguntaram
+                                        </span>
+                                    )}
+                                    {faq.categoria && (
+                                        <span className={`text-xs px-2 py-1 rounded-full ${getCategoriaColor(faq.categoria)}`}>
+                                            {faq.categoria.toLowerCase()}
+                                        </span>
+                                    )}
                                 </div>
                                 <FaqItem
                                     question={faq.pergunta}
