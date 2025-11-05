@@ -131,5 +131,88 @@ export default function Chatbot() {
           <MessageCircle className="w-6 h-6 text-white" />
         </button>
       )}
+
+      {/* Janela do Chat */}
+      {isOpen && (
+        <div className="bg-white rounded-2xl shadow-xl w-96 h-[600px] flex flex-col border border-gray-200 animate-fade-in">
+          
+          {/* Header */}
+          <div className="bg-primary-600 text-white p-4 rounded-t-2xl flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                <MessageCircle className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-lg">AuraMed Assistant</h3>
+                <p className="text-white/80 text-sm">Online • Pronto para ajudar</p>
+              </div>
+            </div>
+            <button
+              onClick={toggleChat}
+              className="p-1 hover:bg-white/20 rounded-lg transition-colors"
+              aria-label="Fechar chat"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Área de Mensagens */}
+          <div className="flex-1 overflow-y-auto p-4 bg-gray-50 space-y-4">
+            {messages.map((message) => (
+              <div
+                key={message.id}
+                className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
+              >
+                <div
+                  className={`max-w-[80%] rounded-2xl p-4 ${
+                    message.isUser
+                      ? 'bg-primary-600 text-white rounded-br-md'
+                      : 'bg-white text-gray-800 border border-gray-200 rounded-bl-md shadow-sm'
+                  }`}
+                >
+                  <div className="flex items-start gap-2">
+                    {!message.isUser && (
+                      <Bot className="w-4 h-4 mt-1 text-primary-600 flex-shrink-0" />
+                    )}
+                    <div className="flex-1">
+                      <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                        {message.text}
+                      </p>
+                      <div className="flex items-center justify-between mt-2 gap-4">
+                        <span className={`text-xs ${message.isUser ? 'text-white/70' : 'text-gray-500'}`}>
+                          {formatTime(message.timestamp)}
+                        </span>
+                        {!message.isUser && message.categoria && (
+                          <span className="text-xs bg-primary-100 text-primary-700 px-2 py-1 rounded-full capitalize">
+                            {message.categoria.toLowerCase().replace(/_/g, ' ')}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    {message.isUser && (
+                      <User className="w-4 h-4 mt-1 text-white/80 flex-shrink-0" />
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+            
+            {isLoading && (
+              <div className="flex justify-start">
+                <div className="bg-white border border-gray-200 rounded-2xl rounded-bl-md p-4 max-w-[80%] shadow-sm">
+                  <div className="flex items-center gap-2">
+                    <Bot className="w-4 h-4 text-primary-600" />
+                    <div className="flex space-x-1">
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+            
+            <div ref={messagesEndRef} />
+          </div>
   
 
