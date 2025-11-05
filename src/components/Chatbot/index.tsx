@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { MessageCircle, X, Send, User, Bot } from 'lucide-react';
 
+const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8080';
+
 interface Message {
   id: string;
   text: string;
@@ -44,16 +46,16 @@ export default function Chatbot() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:8080/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          usuarioId: userId,
-          mensagem: inputMessage
-        })
-      });
+    const response = await fetch(`${API_URL}/chat`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        usuarioId: userId,
+        mensagem: inputMessage
+      })
+    });
 
       if (!response.ok) throw new Error('Erro na resposta do servidor');
 
