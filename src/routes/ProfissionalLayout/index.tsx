@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { User, ClipboardList, AlertTriangle, LogOut, Loader2 } from 'lucide-react';
+import { AlertTriangle, LogOut, Loader2 } from 'lucide-react';
 import logo from '../../assets/logo.png';
+import DashboardProfissional from '../DashboardProfissional';
 
 interface TipoProfissional {
     id: number;
@@ -14,9 +15,8 @@ interface TipoProfissional {
     crm: string;
 }
 
-//const API_URL = import.meta.env.VITE_API_URL;
 
-export default function DashboardProfissional() {
+export default function ProfissionalLayout() {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
 
@@ -103,18 +103,8 @@ export default function DashboardProfissional() {
                     <p className="text-lg text-tx-secondary">CRM: {professional.crm}</p>
                 </header>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div className="bg-white p-6 rounded-lg shadow-md border-2 border-gray-200">
-                        <User className="w-8 h-8 text-primary-600 mb-4" />
-                        <h2 className="text-xl font-semibold text-tx-primary">Gerenciar Pacientes</h2>
-                        <p className="text-tx-secondary mt-2">Adicione novos pacientes e visualize o histórico de consultas.</p>
-                    </div>
-                    <div className="bg-white p-6 rounded-lg shadow-md border-2 border-gray-200">
-                        <ClipboardList className="w-8 h-8 text-primary-600 mb-4" />
-                        <h2 className="text-xl font-semibold text-tx-primary">Relatórios</h2>
-                        <p className="text-tx-secondary mt-2">Acesse relatórios de absenteísmo e preparação.</p>
-                    </div>
-                </div>
+                <DashboardProfissional />
+
             </main>
         </div>
     );
