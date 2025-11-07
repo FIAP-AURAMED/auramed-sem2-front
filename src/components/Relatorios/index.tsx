@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { BarChart3, MessageSquare, HelpCircle, Download, Users, Eye, Ear, Brain } from 'lucide-react';
 import {
-  BarChart, Bar, PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, 
+  BarChart, Bar, PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis,
   CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
 
@@ -27,6 +27,7 @@ interface DificuldadeAcessibilidade {
 interface FaqPopular {
   question: string;
   views: number;
+  categoria?: string;
 }
 
 interface UsoChatbot {
@@ -70,6 +71,10 @@ interface DashboardData {
   metricasChatbot: MetricasChatbotData;
 }
 
+interface ChartData {
+  [key: string]: string | number;
+}
+
 export default function Relatorios() {
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -82,21 +87,81 @@ export default function Relatorios() {
   const fetchDashboardData = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${API_URL}/api/relatorios/completo`);
-      
+      const response = await fetch(`${API_URL}/api/dashboard/completo`);
+
       if (!response.ok) {
         throw new Error('Erro ao carregar dados do dashboard');
       }
-      
+
       const data: DashboardData = await response.json();
       setDashboardData(data);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro desconhecido');
-      console.error('Erro ao buscar dados:', err);
+      console.warn('Erro ao buscar dados do dashboard, usando dados mock:', err);
+      setDashboardData(getDadosMock());
+      setError('Usando dados de demonstração - Banco de dados offline');
     } finally {
       setLoading(false);
     }
   };
+
+  const getDadosMock = (): DashboardData => ({
+    prontidaoAcessibilidade: {
+      habilidadesDigitais: [
+        { skill: 'Básico', count: 45 },
+        { skill: 'Intermediário', count: 82 },
+        { skill: 'Avançado', count: 35 }
+      ],
+      canaisLembrete: [
+        { name: 'WhatsApp', value: 110, fill: '#C81051' },
+        { name: 'SMS', value: 30, fill: '#FFC107' },
+        { name: 'E-mail', value: 15, fill: '#007BFF' },
+        { name: 'Ligação', value: 7, fill: '#000000' }
+      ],
+      dificuldadesAcessibilidade: [
+        { type: 'Visual', count: 18, total: 162 },
+        { type: 'Auditiva', count: 9, total: 162 },
+        { type: 'Cognitiva', count: 25, total: 162 }
+      ]
+    },
+    suporteEngajamento: {
+      faqsPopulares: [
+        { question: 'Como agendar consulta?', views: 150, categoria: 'AGENDAMENTO' },
+        { question: 'Documentos necessários', views: 120, categoria: 'DOCUMENTACAO' },
+        { question: 'Teleconsulta como funciona', views: 95, categoria: 'TELECONSULTA' },
+        { question: 'Horário de funcionamento', views: 80, categoria: 'HORARIO' },
+        { question: 'Contato por email', views: 60, categoria: 'CONTATO' }
+      ],
+      usoChatbot: [
+        { month: 'Jan', usage: 200 },
+        { month: 'Fev', usage: 250 },
+        { month: 'Mar', usage: 230 },
+        { month: 'Abr', usage: 300 }
+      ],
+      perguntasNaoRespondidas: [
+        'Documentos necessários para agendamento',
+        'Teleconsulta funciona aos finais de semana?',
+        'Horário de atendimento extendido',
+        'Documentos para primeira consulta',
+        'Teleconsulta para idosos',
+        'Horário de funcionamento aos sábados'
+      ]
+    },
+    metricasChatbot: {
+      estatisticasSentimentos: [
+        { sentimento: 'POSITIVO', quantidade: 120 },
+        { sentimento: 'NEUTRO', quantidade: 85 },
+        { sentimento: 'NEGATIVO', quantidade: 15 }
+      ],
+      totalConversas: 220,
+      usuariosUnicos: 150,
+      mediaConversasPorUsuario: 1.47,
+      fontesResposta: [
+        { fonte: 'BASE_CONHECIMENTO', quantidade: 180 },
+        { fonte: 'GEMINI', quantidade: 35 },
+        { fonte: 'HIBRIDO', quantidade: 5 }
+      ]
+    }
+  });
 
   const getIconForAcessibilidade = (type: string) => {
     switch (type.toLowerCase()) {
@@ -162,27 +227,102 @@ export default function Relatorios() {
     window.URL.revokeObjectURL(url);
   };
 
+  const processarDadosFAQ = (faqs: FaqPopular[]) => {
+    const categoriasAgrupadas = faqs.reduce((acc, faq) => {
+      const categoria = faq.categoria || 'GERAL';
+      if (!acc[categoria]) {
+        acc[categoria] = { views: 0, count: 0 };
+      }
+      acc[categoria].views += faq.views;
+      acc[categoria].count += 1;
+      return acc;
+    }, {} as Record<string, { views: number; count: number }>);
+
+    return Object.entries(categoriasAgrupadas)
+      .map(([categoria, dados], index) => ({
+        id: index,
+        displayText: formatarCategoria(categoria),
+        views: dados.views,
+        count: dados.count
+      }))
+      .sort((a, b) => b.views - a.views);
+  };
+
+  const processarPerguntasNaoRespondidas = (perguntas: string[]) => {
+    const categoriasAgrupadas = perguntas.reduce((acc, pergunta) => {
+      const categoria = extrairCategoriaDaPergunta(pergunta);
+      acc[categoria] = (acc[categoria] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+
+    return Object.entries(categoriasAgrupadas)
+      .sort(([,a], [,b]) => b - a)
+      .slice(0, 6)
+      .map(([categoria, quantidade]) => ({
+        categoria: formatarCategoria(categoria),
+        quantidade
+      }));
+  };
+
+  const formatarCategoria = (categoria: string) => {
+    const formatos: Record<string, string> = {
+      'AGENDAMENTO': 'Agendamento',
+      'DOCUMENTACAO': 'Documentação',
+      'TELECONSULTA': 'Teleconsulta',
+      'HORARIO': 'Horário',
+      'CONTATO': 'Contato',
+      'CUSTOS': 'Custos',
+      'SERVICOS': 'Serviços',
+      'PROCEDIMENTOS': 'Procedimentos',
+      'OUTRAS_DUVIDAS': 'Outras Dúvidas',
+      'GERAL': 'Geral'
+    };
+    return formatos[categoria] || categoria;
+  };
+
+  const extrairCategoriaDaPergunta = (pergunta: string) => {
+    const perguntaLower = pergunta.toLowerCase();
+    
+    if (perguntaLower.includes('agendar') || perguntaLower.includes('marcar') || perguntaLower.includes('consulta')) {
+      return 'AGENDAMENTO';
+    }
+    if (perguntaLower.includes('documento') || perguntaLower.includes('cpf') || perguntaLower.includes('rg') || perguntaLower.includes('cartão')) {
+      return 'DOCUMENTACAO';
+    }
+    if (perguntaLower.includes('teleconsulta') || perguntaLower.includes('online') || perguntaLower.includes('virtual')) {
+      return 'TELECONSULTA';
+    }
+    if (perguntaLower.includes('horário') || perguntaLower.includes('funciona') || perguntaLower.includes('abre')) {
+      return 'HORARIO';
+    }
+    if (perguntaLower.includes('telefone') || perguntaLower.includes('email') || perguntaLower.includes('contato')) {
+      return 'CONTATO';
+    }
+    if (perguntaLower.includes('gratuito') || perguntaLower.includes('pago') || perguntaLower.includes('custo')) {
+      return 'CUSTOS';
+    }
+    
+    return 'OUTRAS_DUVIDAS';
+  };
+
+  const canaisLembreteData: ChartData[] = dashboardData?.prontidaoAcessibilidade.canaisLembrete.map(item => ({
+    name: item.name,
+    value: item.value,
+    fill: item.fill
+  })) || [];
+
+  const fontesRespostaData: ChartData[] = dashboardData?.metricasChatbot.fontesResposta.map(item => ({
+    fonte: item.fonte,
+    quantidade: item.quantidade
+  })) || [];
+
+  const faqData = dashboardData ? processarDadosFAQ(dashboardData.suporteEngajamento.faqsPopulares) : [];
+  const perguntasNaoRespondidasData = dashboardData ? processarPerguntasNaoRespondidas(dashboardData.suporteEngajamento.perguntasNaoRespondidas) : [];
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <div className="text-center">
-          <div className="text-red-600 text-lg mb-2">Erro ao carregar relatórios</div>
-          <div className="text-gray-600 mb-4">{error}</div>
-          <button
-            onClick={fetchDashboardData}
-            className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700"
-          >
-            Tentar Novamente
-          </button>
-        </div>
       </div>
     );
   }
@@ -201,7 +341,6 @@ export default function Relatorios() {
 
   return (
     <div className="space-y-6">
-      {/* Cabeçalho com Exportação */}
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold text-gray-900">Dashboard Analytics</h1>
         <button
@@ -213,7 +352,16 @@ export default function Relatorios() {
         </button>
       </div>
 
-      {/* Prontidão e Acessibilidade */}
+      {error && (
+        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+          <div className="flex items-center">
+            <div className="text-yellow-800 text-sm">
+              <strong>Atenção:</strong> {error}
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="border bg-white rounded-lg shadow-sm border-gray-300">
         <div className="p-6">
           <h2 className="flex items-center gap-2 text-xl font-semibold text-gray-900">
@@ -223,7 +371,6 @@ export default function Relatorios() {
         </div>
         <div className="p-6 pt-0">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Habilidades Digitais */}
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-center text-gray-800">Habilidades Digitais</h3>
               <ResponsiveContainer width="100%" height={300}>
@@ -237,13 +384,12 @@ export default function Relatorios() {
               </ResponsiveContainer>
             </div>
 
-            {/* Canais de Lembrete */}
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-center text-gray-800">Canal de Lembrete Preferido</h3>
               <ResponsiveContainer width="100%" height={300}>
                 <PieChart>
                   <Pie
-                    data={prontidaoAcessibilidade.canaisLembrete}
+                    data={canaisLembreteData}
                     dataKey="value"
                     nameKey="name"
                     cx="50%"
@@ -261,7 +407,6 @@ export default function Relatorios() {
             </div>
           </div>
 
-          {/* Dificuldades de Acessibilidade */}
           <div className="mt-8 space-y-4">
             <h3 className="text-lg font-semibold text-gray-800">Dificuldades de Acessibilidade</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -289,7 +434,6 @@ export default function Relatorios() {
         </div>
       </div>
 
-      {/* Suporte e Engajamento */}
       <div className="border bg-white rounded-lg shadow-sm">
         <div className="p-6">
           <h2 className="flex items-center gap-2 text-xl font-semibold text-gray-900">
@@ -299,21 +443,28 @@ export default function Relatorios() {
         </div>
         <div className="p-6 pt-0">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* FAQ Mais Acessados */}
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-center text-gray-800">FAQ Mais Acessados</h3>
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={suporteEngajamento.faqsPopulares} layout="vertical">
+              <h3 className="text-lg font-semibold text-center text-gray-800">Perguntas por Categoria</h3>
+              <ResponsiveContainer width="100%" height={350}>
+                <BarChart data={faqData} layout="vertical" margin={{ top: 5, right: 30, left: 140, bottom: 5 }}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis type="number" />
-                  <YAxis dataKey="question" type="category" width={100} fontSize={12} />
-                  <Tooltip />
+                  <YAxis 
+                    dataKey="displayText" 
+                    type="category" 
+                    width={130}
+                    fontSize={11}
+                    tick={{ fontSize: 10 }}
+                  />
+                  <Tooltip 
+                    formatter={(value) => [`${value} visualizações`, 'Quantidade']}
+                    labelFormatter={(label) => `Categoria: ${label}`}
+                  />
                   <Bar dataKey="views" fill="#C81051" radius={[0, 4, 4, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
 
-            {/* Tendências de Uso do Chatbot */}
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-center text-gray-800">Tendências de Uso do Chatbot</h3>
               <ResponsiveContainer width="100%" height={300}>
@@ -328,16 +479,18 @@ export default function Relatorios() {
             </div>
           </div>
 
-          {/* Perguntas Não Respondidas */}
           <div className="mt-8 space-y-4">
             <h3 className="text-lg font-semibold flex items-center gap-2 text-gray-800">
               <HelpCircle className="h-5 w-5" />
-              Principais Perguntas Não Respondidas
+              Categorias com Mais Dúvidas
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {suporteEngajamento.perguntasNaoRespondidas.map((question, index) => (
-                <div key={index} className="p-3 bg-gray-100 rounded-lg text-sm text-gray-700">
-                  {question}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+              {perguntasNaoRespondidasData.map((item, index) => (
+                <div key={index} className="p-3 bg-gray-100 rounded-lg text-sm">
+                  <div className="font-medium text-gray-800">{item.categoria}</div>
+                  <div className="text-xs text-gray-500 mt-1">
+                    {item.quantidade} {item.quantidade === 1 ? 'pergunta' : 'perguntas'}
+                  </div>
                 </div>
               ))}
             </div>
@@ -345,7 +498,6 @@ export default function Relatorios() {
         </div>
       </div>
 
-      {/* Métricas do Chatbot */}
       <div className="border bg-white rounded-lg shadow-sm">
         <div className="p-6">
           <h2 className="flex items-center gap-2 text-xl font-semibold text-gray-900">
@@ -355,7 +507,6 @@ export default function Relatorios() {
         </div>
         <div className="p-6 pt-0">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Estatísticas de Sentimentos */}
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-center text-gray-800">Análise de Sentimentos</h3>
               <ResponsiveContainer width="100%" height={300}>
@@ -373,13 +524,12 @@ export default function Relatorios() {
               </ResponsiveContainer>
             </div>
 
-            {/* Fontes de Resposta */}
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-center text-gray-800">Fontes de Resposta</h3>
               <ResponsiveContainer width="100%" height={300}>
                 <PieChart>
                   <Pie
-                    data={metricasChatbot.fontesResposta}
+                    data={fontesRespostaData}
                     dataKey="quantidade"
                     nameKey="fonte"
                     cx="50%"
@@ -388,9 +538,9 @@ export default function Relatorios() {
                     label
                   >
                     {metricasChatbot.fontesResposta.map((entry, index) => (
-                      <Cell 
-                        key={`cell-${index}`} 
-                        fill={index % 3 === 0 ? '#C81051' : index % 3 === 1 ? '#FFC107' : '#007BFF'} 
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={index % 3 === 0 ? '#C81051' : index % 3 === 1 ? '#FFC107' : '#007BFF'}
                       />
                     ))}
                   </Pie>
@@ -400,7 +550,6 @@ export default function Relatorios() {
             </div>
           </div>
 
-          {/* Métricas de Engajamento */}
           <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="text-center p-4 bg-gray-50 rounded-lg">
               <div className="text-2xl font-bold text-primary-600">
