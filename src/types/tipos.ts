@@ -6,12 +6,27 @@ export interface TipoMedico {
   crm: string;
 }
 
-export interface TipoPacienteLista {
-  idPessoa: number;
-  idMedicoResponsavel: number;
-  nrCartaoSUS: string;
-  dataCadastro: string;
-  ativo: string;
+export interface TipoPacienteCompleto {
+  pessoa: {
+    id: number;
+    nome: string;
+    email: string | null;
+    cpf: string | null;
+    telefone: string;
+    ativo: string;
+  };
+  paciente: {
+    idPessoa: number;
+    idMedicoResponsavel: number;
+    nrCartaoSUS: string;
+    ativo: string;
+  };
+  infoTeleconsulta: {
+    idInfoTeleconsulta: number;
+  } | null;
+  perfilCognitivo: {
+    idPerfilCognitivo: number;
+  } | null;
 }
 
 export interface HabilidadeDigital {
@@ -76,3 +91,30 @@ export interface DashboardData {
   suporteEngajamento: SuporteEngajamentoData;
   metricasChatbot: MetricasChatbotData;
 }
+
+export interface PatientFormData {
+  pessoa?: {
+    nome?: string;
+    email?: string;
+    cpf?: string;
+    dataNascimento?: string;
+    genero?: string;
+    telefone?: string;
+  };
+  paciente?: {
+    nrCartaoSUS?: string;
+  };
+  infoTeleconsulta?: {
+    cdHabilidadeDigital?: string;
+    cdCanalLembrete?: string;
+    inPrecisaCuidador?: string;
+    inJaFezTele?: string;
+  } | null;
+  perfilCognitivo?: {
+    inDificuldadeVisao?: string;
+    inUsaOculos?: string;
+    inDificuldadeAudicao?: string;
+    inUsaAparelhoAud?: string;
+    inDificuldadeCogn?: string;
+  } | null;
+};
