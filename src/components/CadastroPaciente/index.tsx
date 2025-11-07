@@ -1,8 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { UserPlus, Loader2 } from 'lucide-react';
-import { type TipoMedico } from '../../types/tipos.ts';
+import { type TipoMedico } from '../../types/tipos.ts'; 
 import FormularioPaciente from '../FormReutilizavel/index.tsx';
-
 
 
 const API_URL = import.meta.env.VITE_API_URL ?? 'https://auramed-backend-6yw9.onrender.com';
@@ -15,7 +14,6 @@ type PatientFormData = {
   perfilCognitivo?: any | null;
 };
 
-// Estado inicial vazio
 const initialState: PatientFormData = {
   pessoa: {
     tipoPessoa: "PACIENTE"
@@ -31,12 +29,13 @@ interface Props {
   onPacienteCadastrado: () => void;
 }
 
-export default function CadastroPaciente({ medico, authToken, onPacienteCadastrado }: Props) {
+export default function CadastrarPaciente({ medico, authToken, onPacienteCadastrado }: Props) {
   const [newPatient, setNewPatient] = useState<PatientFormData>(initialState);
   const [isLoadingForm, setIsLoadingForm] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
   const [formSuccess, setFormSuccess] = useState<string | null>(null);
 
+  
   // Handler para atualizar o estado aninhado
   const handleFormChange = (
     section: 'pessoa' | 'paciente' | 'infoTeleconsulta' | 'perfilCognitivo', 
@@ -46,7 +45,7 @@ export default function CadastroPaciente({ medico, authToken, onPacienteCadastra
     setNewPatient(prev => ({
       ...prev,
       [section]: {
-        ...prev[section],
+        ...(prev[section] || {}), 
         [name]: value
       }
     }));
@@ -58,6 +57,7 @@ export default function CadastroPaciente({ medico, authToken, onPacienteCadastra
     setFormSuccess(null);
   };
 
+  // Handler para enviar o formulário
   const handleFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoadingForm(true);
@@ -68,27 +68,47 @@ export default function CadastroPaciente({ medico, authToken, onPacienteCadastra
     
     // Validações
     if (!authToken || !medico) {
-      setFormError("Sessão expirada."); setIsLoadingForm(false); return;
+      setFormError("Sessão expirada. Faça login novamente."); 
+      setIsLoadingForm(false); 
+      return;
     }
     if (!newPatient.pessoa?.nome || !newPatient.pessoa?.telefone || !newPatient.paciente?.nrCartaoSUS) {
-      setFormError("Campos obrigatórios (*) não preenchidos."); setIsLoadingForm(false); return;
+      setFormError("Campos obrigatórios (*) não preenchidos: Nome, Telefone ou Cartão SUS."); 
+      setIsLoadingForm(false); 
+      return;
     }
-    // ... (outras validações de tamanho) ...
     
-    // --- Construção do Request Body ---
-    // (Ajusta os dados para o formato que a API espera)
+    const cleanTelefone = cleanNumeric(newPatient.pessoa.telefone);
+    const cleanSus = cleanNumeric(newPatient.paciente.nrCartaoSUS);
+    const cleanCpf = cleanNumeric(newPatient.pessoa.cpf);
+
+    if (cleanTelefone.length < 10 || cleanTelefone.length > 15) {
+      setFormError(`Telefone inválido. Deve ter entre 10 e 15 dígitos.`);
+      setIsLoadingForm(false);
+      return;
+    }
+    if (cleanSus.length !== 15) {
+      setFormError(`Cartão SUS inválido. Deve ter exatamente 15 dígitos.`);
+      setIsLoadingForm(false);
+      return;
+    }
+    if (cleanCpf && cleanCpf.length !== 11) {
+      setFormError(`CPF inválido. Se preenchido, deve ter exatamente 11 dígitos.`);
+      setIsLoadingForm(false);
+      return;
+    }
+    
     const requestBody = {
       pessoa: {
         ...newPatient.pessoa,
-        telefone: cleanNumeric(newPatient.pessoa.telefone),
-        cpf: cleanNumeric(newPatient.pessoa.cpf),
+        telefone: cleanTelefone,
+        cpf: cleanCpf || null,
       },
       paciente: {
         ...newPatient.paciente,
-        idMedicoResponsavel: medico.id, // Adiciona o ID do médico logado
-        nrCartaoSUS: cleanNumeric(newPatient.paciente.nrCartaoSUS),
+        idMedicoResponsavel: medico.id,
+        nrCartaoSUS: cleanSus,
       },
-      // Adiciona seções opcionais apenas se tiverem dados
       ...(Object.keys(newPatient.infoTeleconsulta || {}).length > 0 && { infoTeleconsulta: newPatient.infoTeleconsulta }),
       ...(Object.keys(newPatient.perfilCognitivo || {}).length > 0 && { perfilCognitivo: newPatient.perfilCognitivo }),
     };
@@ -147,14 +167,14 @@ export default function CadastroPaciente({ medico, authToken, onPacienteCadastra
       
       <div className="p-6 pt-0">
         <form onSubmit={handleFormSubmit}>
-          {/* O FORMULÁRIO REUTILIZÁVEL É INSERIDO AQUI */}
+          
           <FormularioPaciente
             formData={newPatient}
             onFormChange={handleFormChange}
-            isReadOnly={isLoadingForm}
+            mode="create"
+            isDisabled={isLoadingForm}
           />
 
-          {/* BOTÕES DE AÇÃO */}
           <div className="flex gap-4 pt-6 border-t mt-8">
             <button type="submit" disabled={isLoadingForm} className="inline-flex items-center justify-center flex-1 px-4 py-2 text-sm font-medium text-white bg-primary-600 rounded-md hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
               {isLoadingForm ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <UserPlus className="h-4 w-4 mr-2" />}
