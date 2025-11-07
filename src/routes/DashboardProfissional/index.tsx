@@ -1,13 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Loader2, AlertTriangle } from 'lucide-react';
-import { type TipoMedico } from '../../types/tipos.ts';
+import { type TipoMedico } from '../../types/tipos';
 
-import ListaPacientes from '../../components/ListaPacientes.tsx/index.tsx';
-import CadastrarPaciente from '../../components/CadastroPaciente/index.tsx';
-import Relatorios from '../../components/Relatorios/index.tsx';
-import Configuracoes from '../../components/Configuracoes/index.tsx';
-
-
+import ListaPacientes from '../../components/ListaPacientes';
+import CadastrarPaciente from '../../components/CadastroPaciente';
+import Relatorios from '../../components/Relatorios';
+import Configuracoes from '../../components/Configuracoes';
 
 export default function DashboardProfissional() {
   
@@ -40,7 +38,6 @@ export default function DashboardProfissional() {
   }, []);
 
   const handlePacienteCadastrado = () => {
-
     setActiveTab('listPatients');
   };
 
@@ -65,22 +62,49 @@ export default function DashboardProfissional() {
   return (
     <div className="w-full">
       <div className="grid w-full grid-cols-4 bg-gray-100 p-1 rounded-lg border border-gray-300">
-        <button onClick={() => setActiveTab('listPatients')} className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${activeTab === 'listPatients' ? 'bg-white text-gray-900 shadow' : 'text-gray-500 hover:text-gray-900'}`}>
+        <button 
+          onClick={() => setActiveTab('listPatients')} 
+          className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+            activeTab === 'listPatients' 
+              ? 'bg-white text-gray-900 shadow' 
+              : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
+          }`}
+        >
           Lista de Pacientes
         </button>
-        <button onClick={() => setActiveTab('addPatient')} className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${activeTab === 'addPatient' ? 'bg-white text-gray-900 shadow' : 'text-gray-500 hover:text-gray-900'}`}>
+        <button 
+          onClick={() => setActiveTab('addPatient')} 
+          className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+            activeTab === 'addPatient' 
+              ? 'bg-white text-gray-900 shadow' 
+              : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
+          }`}
+        >
           Cadastrar Paciente
         </button>
-        <button onClick={() => setActiveTab('reports')} className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${activeTab === 'reports' ? 'bg-white text-gray-900 shadow' : 'text-gray-500 hover:text-gray-900'}`}>
+        <button 
+          onClick={() => setActiveTab('reports')} 
+          className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+            activeTab === 'reports' 
+              ? 'bg-white text-gray-900 shadow' 
+              : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
+          }`}
+        >
           Relatórios
         </button>
-        <button onClick={() => setActiveTab('settings')} className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${activeTab === 'settings' ? 'bg-white text-gray-900 shadow' : 'text-gray-500 hover:text-gray-900'}`}>
+        <button 
+          onClick={() => setActiveTab('settings')} 
+          className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+            activeTab === 'settings' 
+              ? 'bg-white text-gray-900 shadow' 
+              : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
+          }`}
+        >
           Configurações
         </button>
       </div>
 
       <div className="mt-6">
-        
         {activeTab === 'listPatients' && (
           <ListaPacientes medico={medico} authToken={authToken} />
         )}
@@ -100,8 +124,7 @@ export default function DashboardProfissional() {
         {activeTab === 'settings' && (
           <Configuracoes medico={medico} />
         )}
-
       </div>
     </div>
   );
-};
+}
