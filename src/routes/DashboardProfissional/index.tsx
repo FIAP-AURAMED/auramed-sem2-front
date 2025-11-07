@@ -106,7 +106,7 @@ export default function DashboardProfissional() {
 
       <div className="mt-6">
         {activeTab === 'listPatients' && (
-          <ListaPacientes medico={medico} authToken={authToken} />
+          <ListaPacientes authToken={authToken} />
         )}
         
         {activeTab === 'addPatient' && (
