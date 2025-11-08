@@ -4,12 +4,12 @@ import {
   BarChart, Bar, PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis,
   CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
-import type { 
-  DashboardData, 
-  CategoriaFAQ, 
-  CategoriaPerguntas, 
+import type {
+  DashboardData,
+  CategoriaFAQ,
+  CategoriaPerguntas,
   ChartData,
-  FaqPopular 
+  FaqPopular
 } from '../../types/tipos';
 
 const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8080';
@@ -195,7 +195,7 @@ export default function Relatorios() {
     }, {});
 
     return Object.entries(categoriasAgrupadas)
-      .sort(([,a], [,b]) => (b as number) - (a as number))
+      .sort(([, a], [, b]) => (b as number) - (a as number))
       .slice(0, 6)
       .map(([categoria, quantidade]) => ({
         categoria: formatarCategoria(categoria),
@@ -221,7 +221,7 @@ export default function Relatorios() {
 
   const extrairCategoriaDaPergunta = (pergunta: string) => {
     const perguntaLower = pergunta.toLowerCase();
-    
+
     if (perguntaLower.includes('agendar') || perguntaLower.includes('marcar') || perguntaLower.includes('consulta')) {
       return 'AGENDAMENTO';
     }
@@ -240,7 +240,7 @@ export default function Relatorios() {
     if (perguntaLower.includes('gratuito') || perguntaLower.includes('pago') || perguntaLower.includes('custo')) {
       return 'CUSTOS';
     }
-    
+
     return 'OUTRAS_DUVIDAS';
   };
 
@@ -386,14 +386,14 @@ export default function Relatorios() {
                 <BarChart data={faqData} layout="vertical" margin={{ top: 5, right: 30, left: 140, bottom: 5 }}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis type="number" />
-                  <YAxis 
-                    dataKey="displayText" 
-                    type="category" 
+                  <YAxis
+                    dataKey="displayText"
+                    type="category"
                     width={130}
                     fontSize={11}
                     tick={{ fontSize: 10 }}
                   />
-                  <Tooltip 
+                  <Tooltip
                     formatter={(value) => [`${value} visualizações`, 'Quantidade']}
                     labelFormatter={(label) => `Categoria: ${label}`}
                   />
@@ -474,7 +474,7 @@ export default function Relatorios() {
                     outerRadius={100}
                     label
                   >
-                    {metricasChatbot.fontesResposta.map((entry, index) => (
+                    {metricasChatbot.fontesResposta.map((_, index) => (
                       <Cell
                         key={`cell-${index}`}
                         fill={index % 3 === 0 ? '#C81051' : index % 3 === 1 ? '#FFC107' : '#007BFF'}
