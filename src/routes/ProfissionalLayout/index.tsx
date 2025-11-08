@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { AlertTriangle, LogOut, Loader2 } from 'lucide-react';
 import logo from '../../assets/logo.png';
 import DashboardProfissional from '../DashboardProfissional';
+import ScrollToTop from '../../components/ScrollToTop';
 
 interface TipoProfissional {
     id: number;
@@ -85,8 +86,9 @@ export default function ProfissionalLayout() {
 
     return (
         <div className="flex flex-col min-h-screen bg-gray-100">
+            <ScrollToTop />
             <aside className="w-full h-30 bg-white text-gray-800 p-4 flex justify-between items-center shadow-lg">
-                <img src={logo} alt="AuraMed Logo" className=" w-20 lg:w-35" />
+                <img src={logo} alt="AuraMed Logo" className=" w-25" />
                 <div>
                     <Link to="/" className="flex items-center gap-3 rounded-md p-2 hover:bg-primary-700 hover:text-white">
                         <LogOut className="w-5 h-5" />

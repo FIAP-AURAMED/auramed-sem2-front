@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import * as faceapi from '@vladmandic/face-api';
 import { Camera, CameraOff, Lightbulb, Monitor, Wifi } from 'lucide-react';
 
