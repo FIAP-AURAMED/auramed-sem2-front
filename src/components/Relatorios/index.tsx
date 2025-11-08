@@ -4,76 +4,15 @@ import {
   BarChart, Bar, PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis,
   CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
+import type { 
+  DashboardData, 
+  CategoriaFAQ, 
+  CategoriaPerguntas, 
+  ChartData,
+  FaqPopular 
+} from '../../types/tipos';
 
 const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8080';
-
-interface HabilidadeDigital {
-  skill: string;
-  count: number;
-}
-
-interface CanalLembrete {
-  name: string;
-  value: number;
-  fill: string;
-}
-
-interface DificuldadeAcessibilidade {
-  type: string;
-  count: number;
-  total: number;
-}
-
-interface FaqPopular {
-  question: string;
-  views: number;
-  categoria?: string;
-}
-
-interface UsoChatbot {
-  month: string;
-  usage: number;
-}
-
-interface EstatisticaSentimento {
-  sentimento: string;
-  quantidade: number;
-}
-
-interface FonteResposta {
-  fonte: string;
-  quantidade: number;
-}
-
-interface ProntidaoAcessibilidadeData {
-  habilidadesDigitais: HabilidadeDigital[];
-  canaisLembrete: CanalLembrete[];
-  dificuldadesAcessibilidade: DificuldadeAcessibilidade[];
-}
-
-interface SuporteEngajamentoData {
-  faqsPopulares: FaqPopular[];
-  usoChatbot: UsoChatbot[];
-  perguntasNaoRespondidas: string[];
-}
-
-interface MetricasChatbotData {
-  estatisticasSentimentos: EstatisticaSentimento[];
-  totalConversas: number;
-  usuariosUnicos: number;
-  mediaConversasPorUsuario: number;
-  fontesResposta: FonteResposta[];
-}
-
-interface DashboardData {
-  prontidaoAcessibilidade: ProntidaoAcessibilidadeData;
-  suporteEngajamento: SuporteEngajamentoData;
-  metricasChatbot: MetricasChatbotData;
-}
-
-interface ChartData {
-  [key: string]: string | number;
-}
 
 export default function Relatorios() {
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
@@ -227,8 +166,8 @@ export default function Relatorios() {
     window.URL.revokeObjectURL(url);
   };
 
-  const processarDadosFAQ = (faqs: FaqPopular[]) => {
-    const categoriasAgrupadas = faqs.reduce((acc, faq) => {
+  const processarDadosFAQ = (faqs: FaqPopular[]): CategoriaFAQ[] => {
+    const categoriasAgrupadas = faqs.reduce((acc: Record<string, { views: number; count: number }>, faq) => {
       const categoria = faq.categoria || 'GERAL';
       if (!acc[categoria]) {
         acc[categoria] = { views: 0, count: 0 };
@@ -236,7 +175,7 @@ export default function Relatorios() {
       acc[categoria].views += faq.views;
       acc[categoria].count += 1;
       return acc;
-    }, {} as Record<string, { views: number; count: number }>);
+    }, {});
 
     return Object.entries(categoriasAgrupadas)
       .map(([categoria, dados], index) => ({
@@ -248,19 +187,19 @@ export default function Relatorios() {
       .sort((a, b) => b.views - a.views);
   };
 
-  const processarPerguntasNaoRespondidas = (perguntas: string[]) => {
-    const categoriasAgrupadas = perguntas.reduce((acc, pergunta) => {
+  const processarPerguntasNaoRespondidas = (perguntas: string[]): CategoriaPerguntas[] => {
+    const categoriasAgrupadas = perguntas.reduce((acc: Record<string, number>, pergunta) => {
       const categoria = extrairCategoriaDaPergunta(pergunta);
       acc[categoria] = (acc[categoria] || 0) + 1;
       return acc;
-    }, {} as Record<string, number>);
+    }, {});
 
     return Object.entries(categoriasAgrupadas)
-      .sort(([,a], [,b]) => b - a)
+      .sort(([,a], [,b]) => (b as number) - (a as number))
       .slice(0, 6)
       .map(([categoria, quantidade]) => ({
         categoria: formatarCategoria(categoria),
-        quantidade
+        quantidade: quantidade as number
       }));
   };
 
@@ -305,19 +244,17 @@ export default function Relatorios() {
     return 'OUTRAS_DUVIDAS';
   };
 
+  const faqData: CategoriaFAQ[] = dashboardData ? processarDadosFAQ(dashboardData.suporteEngajamento.faqsPopulares) : [];
+  const perguntasNaoRespondidasData: CategoriaPerguntas[] = dashboardData ? processarPerguntasNaoRespondidas(dashboardData.suporteEngajamento.perguntasNaoRespondidas) : [];
   const canaisLembreteData: ChartData[] = dashboardData?.prontidaoAcessibilidade.canaisLembrete.map(item => ({
     name: item.name,
     value: item.value,
     fill: item.fill
   })) || [];
-
   const fontesRespostaData: ChartData[] = dashboardData?.metricasChatbot.fontesResposta.map(item => ({
     fonte: item.fonte,
     quantidade: item.quantidade
   })) || [];
-
-  const faqData = dashboardData ? processarDadosFAQ(dashboardData.suporteEngajamento.faqsPopulares) : [];
-  const perguntasNaoRespondidasData = dashboardData ? processarPerguntasNaoRespondidas(dashboardData.suporteEngajamento.perguntasNaoRespondidas) : [];
 
   if (loading) {
     return (

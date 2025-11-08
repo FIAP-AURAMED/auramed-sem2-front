@@ -1,20 +1,22 @@
+export interface TipoPessoa {
+  id: number;
+  nome: string;
+  email: string | null;
+  cpf: string | null;
+  telefone: string;
+  ativo: string;
+  dataNascimento?: string;
+  genero?: string;
+}
+
 export interface TipoMedico {
   id: number;
-  pessoa: {
-    id: number; nome: string | null; email: string | null; cpf: string | null;
-  };
+  pessoa: TipoPessoa;
   crm: string;
 }
 
 export interface TipoPacienteCompleto {
-  pessoa: {
-    id: number;
-    nome: string;
-    email: string | null;
-    cpf: string | null;
-    telefone: string;
-    ativo: string;
-  };
+  pessoa: TipoPessoa;
   paciente: {
     idPessoa: number;
     idMedicoResponsavel: number;
@@ -23,9 +25,45 @@ export interface TipoPacienteCompleto {
   };
   infoTeleconsulta: {
     idInfoTeleconsulta: number;
+    cdHabilidadeDigital?: string;
+    cdCanalLembrete?: string;
+    inPrecisaCuidador?: string;
+    inJaFezTele?: string;
   } | null;
   perfilCognitivo: {
     idPerfilCognitivo: number;
+    inDificuldadeVisao?: string;
+    inUsaOculos?: string;
+    inDificuldadeAudicao?: string;
+    inUsaAparelhoAud?: string;
+    inDificuldadeCogn?: string;
+  } | null;
+}
+
+export interface PatientFormData {
+  pessoa?: {
+    nome?: string;
+    email?: string;
+    cpf?: string;
+    dataNascimento?: string;
+    genero?: string;
+    telefone?: string;
+  };
+  paciente?: {
+    nrCartaoSUS?: string;
+  };
+  infoTeleconsulta?: {
+    cdHabilidadeDigital?: string;
+    cdCanalLembrete?: string;
+    inPrecisaCuidador?: string;
+    inJaFezTele?: string;
+  } | null;
+  perfilCognitivo?: {
+    inDificuldadeVisao?: string;
+    inUsaOculos?: string;
+    inDificuldadeAudicao?: string;
+    inUsaAparelhoAud?: string;
+    inDificuldadeCogn?: string;
   } | null;
 }
 
@@ -49,6 +87,7 @@ export interface DificuldadeAcessibilidade {
 export interface FaqPopular {
   question: string;
   views: number;
+  categoria?: string;
 }
 
 export interface UsoChatbot {
@@ -92,29 +131,18 @@ export interface DashboardData {
   metricasChatbot: MetricasChatbotData;
 }
 
-export interface PatientFormData {
-  pessoa?: {
-    nome?: string;
-    email?: string;
-    cpf?: string;
-    dataNascimento?: string;
-    genero?: string;
-    telefone?: string;
-  };
-  paciente?: {
-    nrCartaoSUS?: string;
-  };
-  infoTeleconsulta?: {
-    cdHabilidadeDigital?: string;
-    cdCanalLembrete?: string;
-    inPrecisaCuidador?: string;
-    inJaFezTele?: string;
-  } | null;
-  perfilCognitivo?: {
-    inDificuldadeVisao?: string;
-    inUsaOculos?: string;
-    inDificuldadeAudicao?: string;
-    inUsaAparelhoAud?: string;
-    inDificuldadeCogn?: string;
-  } | null;
-};
+export interface CategoriaFAQ {
+  id: number;
+  displayText: string;
+  views: number;
+  count: number;
+}
+
+export interface CategoriaPerguntas {
+  categoria: string;
+  quantidade: number;
+}
+
+export interface ChartData {
+  [key: string]: string | number;
+}
