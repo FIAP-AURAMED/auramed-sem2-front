@@ -1,6 +1,6 @@
 import { useForm, type SubmitHandler } from 'react-hook-form';
-import { Lock, Shield, Stethoscope, User } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Lock, Shield, Stethoscope, User, ArrowLeft } from "lucide-react";
+import { useNavigate, Link } from "react-router-dom";
 import { useEffect, useState } from 'react';
 
 interface IFormInput {
@@ -192,7 +192,33 @@ export default function LoginProfissional() {
                     </button>
                 </form>
             </section>
+
+            <section className="flex flex-col w-[90%] max-w-md m-auto bg-primary-600/5 border-primary-600/20 border p-6 gap-4 rounded-xl">
+                <h3 className="text-xl font-semibold text-tx-primary mb-2">Funcionalidades da Área do Profissional</h3>
+                <ul className="list-disc list-inside space-y-2 marker:text-primary-600">
+                    <li className="text-tx-secondary">Cadastro e gestão de pacientes</li>
+                    <li className="text-tx-secondary">Relatórios de absenteísmo</li>
+                    <li className="text-tx-secondary">Análise de preparação dos pacientes</li>
+                    <li className="text-tx-secondary">Estatísticas de uso da plataforma</li>
+                </ul>
+            </section>
+
+            <div className="text-center">
+                <Link to="/" className="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium hover:underline">
+                    <ArrowLeft className="w-4 h-4 mr-2" />
+                    Voltar à página inicial
+                </Link>
+            </div>
+
+            <section className="flex flex-col items-center w-[90%] max-w-md m-auto border-gray-300 border-2 p-6 gap-4 rounded-xl">
+                <p className="text-lg text-tx-secondary text-center">Precisa de ajuda ou ainda não tem acesso?</p>
+                <Link 
+                    to="/central-ajuda"
+                    className="px-6 py-2 border-2 border-primary-600 text-primary-600 font-semibold rounded-lg hover:bg-primary-600/10 transition-colors"
+                >
+                    Entrar em Contato
+                </Link>
+            </section>
         </div>
     );
 }
-

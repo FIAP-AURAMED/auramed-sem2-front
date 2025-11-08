@@ -14,7 +14,7 @@ export default function CentralAjuda() {
     useEffect(() => {
         document.title = 'AuraMed | Central de Ajuda';
         carregarPerguntasFrequentes();
-        
+
         return () => {
             document.title = 'AuraMed';
         };
@@ -24,16 +24,16 @@ export default function CentralAjuda() {
         try {
             setLoading(true);
             setError(null);
-            
+
             const response = await fetch(`${API_URL}/api/faq/perguntas-frequentes?limite=8`);
-            
+
             if (!response.ok) {
                 throw new Error('Erro ao carregar perguntas frequentes');
             }
-            
+
             const data: PerguntaFrequente[] = await response.json();
             setFaqData(data);
-            
+
         } catch (err) {
             console.error('Erro:', err);
             setError('Não foi possível carregar as perguntas frequentes. Usando perguntas padrão.');
@@ -48,40 +48,27 @@ export default function CentralAjuda() {
             pergunta: 'Como agendar uma consulta?',
             resposta: 'Entre em contato pelo telefone (11) 5180-7800 ou através do nosso WhatsApp. Nossa equipe terá prazer em ajudar você!',
             frequencia: 1,
-            categoria: 'Agendamento (1 vez)'
+            categoria: 'Agendamento'
         },
         {
             pergunta: 'Quais são os horários de funcionamento?',
             resposta: 'O IMREA funciona de segunda a sábado, das 7h às 19h. Aos domingos e feriados estamos fechados.',
             frequencia: 1,
-            categoria: 'Horário de Funcionamento (1 vez)'
+            categoria: 'Horário de Funcionamento'
         },
         {
             pergunta: 'Vocês fazem teleconsultas?',
             resposta: 'Sim! Oferecemos atendimento por telemedicina. Você precisa de um dispositivo com câmera, microfone e conexão com internet.',
             frequencia: 1,
-            categoria: 'Teleconsulta (1 vez)'
+            categoria: 'Teleconsulta'
         },
         {
             pergunta: 'Quais documentos preciso levar?',
             resposta: 'Para a consulta, tenha em mãos: RG, CPF, Cartão do SUS e exames recentes se tiver.',
             frequencia: 1,
-            categoria: 'Documentação (1 vez)'
+            categoria: 'Documentação'
         }
     ];
-
-    const getCategoriaColor = (categoria: string) => {
-        const cores: { [key: string]: string } = {
-            'AGENDAMENTO': 'bg-blue-100 text-blue-800',
-            'TELECONSULTA': 'bg-green-100 text-green-800',
-            'INFORMACAO': 'bg-purple-100 text-purple-800',
-            'DOCUMENTACAO': 'bg-orange-100 text-orange-800',
-            'GERAL': 'bg-gray-100 text-gray-800'
-        };
-        
-        const categoriaBase = categoria.split(' ')[0].toUpperCase();
-        return cores[categoriaBase] || cores['GERAL'];
-    };
 
     return (
         <div className="container mx-auto px-4 py-12">
@@ -93,7 +80,7 @@ export default function CentralAjuda() {
                 <p className="text-xl text-tx-secondary max-w-2xl mx-auto mt-4">
                     Perguntas mais frequentes dos nossos pacientes
                 </p>
-                
+
                 <div className="flex items-center justify-center gap-4 mt-6">
                     <button
                         onClick={carregarPerguntasFrequentes}
@@ -103,7 +90,7 @@ export default function CentralAjuda() {
                         <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
                         {loading ? 'Atualizando...' : 'Atualizar FAQ'}
                     </button>
-                    
+
                     <div className="flex items-center gap-2 text-sm text-tx-secondary">
                         <TrendingUp className="w-4 h-4" />
                         <span>Baseado nas perguntas reais dos pacientes</span>
@@ -136,16 +123,9 @@ export default function CentralAjuda() {
                                     <span className="flex items-center justify-center w-6 h-6 bg-primary-100 text-primary-700 rounded-full text-xs font-bold">
                                         {index + 1}
                                     </span>
-                                    {faq.frequencia > 1 && (
-                                        <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">
-                                            {faq.frequencia} pessoas perguntaram
-                                        </span>
-                                    )}
-                                    {faq.categoria && (
-                                        <span className={`text-xs px-2 py-1 rounded-full ${getCategoriaColor(faq.categoria)}`}>
-                                            {faq.categoria.toLowerCase()}
-                                        </span>
-                                    )}
+                                    <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">
+                                        {faq.frequencia} {faq.frequencia === 1 ? 'pessoa perguntou' : 'pessoas perguntaram'}
+                                    </span>
                                 </div>
                                 <FaqItem
                                     question={faq.pergunta}
