@@ -2,7 +2,7 @@
 
 [🔗 *Acesse o site implantado aqui*](https://auramed-sem2-front-beige.vercel.app/)
 
-[*Link vídeo do youtube*](https://youtu.be/pOOgVAxnN2Q)
+[*Link vídeo do youtube*](https://youtu.be/xvR5o4YSkOM)
 
 ---
 
@@ -54,6 +54,7 @@ O projeto foi estruturado utilizando uma arquitetura modular para garantir escal
 -   *React Router DOM:* Para gerenciamento de rotas estáticas e dinâmicas na SPA.
 -   *React Hook Form:* Para validação de formulários de forma performática e robusta.
 -   *Lucide React:* Biblioteca de ícones.
+-   *API Java: Para o back-end e fornecimento de dados para a aplicação.
 -   *GitHub & GitFlow:* Para versionamento de código e trabalho em equipe.
 -   *GitHub Actions & Pages:* Para fazer o deploy (implantação) contínuo do site.
 
